@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNoStl|Win32">
+      <Configuration>DebugNoStl</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugNoStl|x64">
+      <Configuration>DebugNoStl</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{59554619-11F1-43C0-B86E-4CFAF273E673}</ProjectGuid>
+    <RootNamespace>Graphics</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\Bin64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|x64'">
+    <OutDir>$(SolutionDir)\Bin64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\Bin64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\Bin32\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|Win32'">
+    <OutDir>$(SolutionDir)\Bin32\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\Bin32\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/;$(SolutionDir)/Dependencies/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoStl|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/;$(SolutionDir)/Dependencies/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;_SCL_SECURE = 0;_HAS_ITERATOR_DEBUGGING = 0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Source/;$(SolutionDir)/Dependencies/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)/</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Graphics\Common\Manager\Manager.cpp" />
+    <ClCompile Include="..\Source\Graphics\Common\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Source\Graphics\Common\Mesh\Model.cpp" />
+    <ClCompile Include="..\Source\Graphics\Common\Texture\TextureAtlas.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\CommandAllocator.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\CommandQueue.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\Common.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\Context.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\D3DShader.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\D3DUploader.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\RootSignature.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\D3DRenderer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\D3DSwapChain.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\DescriptorHandle.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\DescriptorHeap.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\QueryHeap.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\BlendState.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\PipelineState.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\RasterizerState.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\ColorBuffer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\DepthBuffer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuBuffer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuMappedBuffer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuResource.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\LinearAllocator.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\PixelBuffer.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Texture\Sampler.cpp" />
+    <ClCompile Include="..\Source\Graphics\D3D12\Texture\Texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Graphics\Common\Camera\Camera.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Camera\OrthoCamera.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Light\DirectionalLight.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Light\Light.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Light\PointLight.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Light\SpotLight.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Manager\Manager.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Mesh\Mesh.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Mesh\Model.h" />
+    <ClInclude Include="..\Source\Graphics\Common\Texture\TextureAtlas.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandAllocator.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandList.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandQueue.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Common.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Context.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\D3DUploader.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Fence.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\ResourceBarrier.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\RootSignature.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\D3DSwapChain.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\DescriptorHandle.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\D3DShader.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\D3DRenderer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\DescriptorHeap.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\QueryHeap.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\BlendState.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\PipelineState.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\RasterizerState.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\ColorBuffer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\DepthBuffer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuBuffer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuMappedBuffer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuResource.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\LinearAllocator.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\PixelBuffer.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Texture\Sampler.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Texture\Texture.h" />
+    <ClInclude Include="..\Source\Graphics\Graphics.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

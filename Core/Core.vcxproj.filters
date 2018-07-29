@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Compute">
+      <UniqueIdentifier>{07cb8a84-e66d-49f5-b187-6974e3036f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constants">
+      <UniqueIdentifier>{06abd5a7-d539-4ce1-a330-1fed8a003734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{50242d45-47c0-42c3-aa1d-1252a067196b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files">
+      <UniqueIdentifier>{d2a1c51b-4d4d-4d6e-a23e-c79abe3ea685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functions">
+      <UniqueIdentifier>{a1283371-d65f-422d-9bdd-68c6b783bc33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{ef6ea0af-8217-4e30-af03-7cffa8fbefd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{aaf1eea9-4692-4a06-a2f8-3828ebd17838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{57b1e6f5-e8ba-45ff-89e2-39160df71345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task">
+      <UniqueIdentifier>{63c8b88e-5ebc-404f-810e-e5affb28049a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{56ffb4d6-e0fb-450b-8c97-9e8f94ccdd16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scheduler">
+      <UniqueIdentifier>{cf8c8d56-cda4-422e-a275-415981710a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Profiler">
+      <UniqueIdentifier>{fbce33ea-2b6a-4a0c-bbed-a8a5075a6355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{1f1c48a8-8c72-4c0e-ab15-1292174735da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Numeric">
+      <UniqueIdentifier>{6a282a63-cb4b-4089-ade8-6e5da3b135e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin">
+      <UniqueIdentifier>{2be7fd4f-06eb-40af-9c65-a64a18b631b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{9d82d229-5d05-482a-84ff-62450388c7ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Primitive">
+      <UniqueIdentifier>{15c8b3ca-033b-40a1-9420-4eb7894957f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Core\Core.cpp" />
+    <ClCompile Include="..\Source\Core\Time\Time.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Time\Timer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Task\Task.cpp">
+      <Filter>Task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\System\System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Scheduler\Scheduler.cpp">
+      <Filter>Scheduler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Profiler\Profiler.cpp">
+      <Filter>Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Memory\Memory.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Log\Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Functions\Functions.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Files\Files.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Constants\Constants.cpp">
+      <Filter>Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Compute\Compute.cpp">
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Math\Numeric\Common.cpp">
+      <Filter>Math\Numeric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Plugin\Plugin.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core\Util\String.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Core\Core.h" />
+    <ClInclude Include="..\Source\Core\Time\Time.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Time\Timer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Task\Task.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\System\System.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Scheduler\Scheduler.h">
+      <Filter>Scheduler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Profiler\Profiler.h">
+      <Filter>Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Memory\Memory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Log\Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Functions\Functions.h">
+      <Filter>Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Files\Files.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Event\EventBridge.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Event\EventChannel.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Event\EventDispatcher.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Event\EventHandler.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Constants\Constants.h">
+      <Filter>Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Compute\Compute.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Numeric\Common.h">
+      <Filter>Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Numeric\Float4.h">
+      <Filter>Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Numeric\Mat4.h">
+      <Filter>Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Numeric\Quat.h">
+      <Filter>Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Plugin\Plugin.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Util\ID.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Util\Assert.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Util\String.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Primitive\AABB.h">
+      <Filter>Math\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Numeric\Int2.h">
+      <Filter>Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Primitive\Frustum.h">
+      <Filter>Math\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Primitive\Plane.h">
+      <Filter>Math\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core\Math\Primitive\Ray.h">
+      <Filter>Math\Primitive</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

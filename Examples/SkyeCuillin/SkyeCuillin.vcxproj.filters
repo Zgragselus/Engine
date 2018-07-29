@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Voxelize.cpp" />
+    <ClCompile Include="RenderPass.cpp" />
+    <ClCompile Include="RenderPassGBuffer.cpp" />
+    <ClCompile Include="RenderPassFullscreen.cpp" />
+    <ClCompile Include="RenderPassDeferredShading.cpp" />
+    <ClCompile Include="RenderPassCubeShadowMap.cpp" />
+    <ClCompile Include="RenderPassShadowMap.cpp" />
+    <ClCompile Include="RenderPassConeTracingGI.cpp" />
+    <ClCompile Include="RenderPassConeTracingReflection.cpp" />
+    <ClCompile Include="RenderPassSeparableBlur.cpp" />
+    <ClCompile Include="RenderPassConeTracingAO.cpp" />
+    <ClCompile Include="..\..\Dependencies\Imgui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\Imgui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\Imgui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiSubsystem.cpp" />
+    <ClCompile Include="RenderGizmo.cpp" />
+    <ClCompile Include="RenderPassPicking.cpp" />
+    <ClCompile Include="RenderPassResolve.cpp" />
+    <ClCompile Include="DirectoryTree.cpp" />
+    <ClCompile Include="DirectoryWatch.cpp" />
+    <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="LightingSystem.cpp" />
+    <ClCompile Include="GraphicsProfiler.cpp" />
+    <ClCompile Include="RenderPassGenerateMipmap.cpp" />
+    <ClCompile Include="RenderPassHiZ.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Voxelize.h" />
+    <ClInclude Include="RenderPass.h" />
+    <ClInclude Include="RenderPassGBuffer.h" />
+    <ClInclude Include="RenderPassFullscreen.h" />
+    <ClInclude Include="RenderPassDeferredShading.h" />
+    <ClInclude Include="RenderPassCubeShadowMap.h" />
+    <ClInclude Include="RenderPassShadowMap.h" />
+    <ClInclude Include="RenderPassConeTracingGI.h" />
+    <ClInclude Include="RenderPassConeTracingReflection.h" />
+    <ClInclude Include="RenderPassSeparableBlur.h" />
+    <ClInclude Include="RenderPassConeTracingAO.h" />
+    <ClInclude Include="..\..\Dependencies\Imgui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\Imgui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\Imgui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\Imgui\stb_rect_pack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\Imgui\stb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\Imgui\stb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiSubsystem.h" />
+    <ClInclude Include="RenderGizmo.h" />
+    <ClInclude Include="RenderPassPicking.h" />
+    <ClInclude Include="RenderPassResolve.h" />
+    <ClInclude Include="DirectoryTree.h" />
+    <ClInclude Include="DirectoryWatch.h" />
+    <ClInclude Include="Editor.h" />
+    <ClInclude Include="LightingSystem.h" />
+    <ClInclude Include="GraphicsProfiler.h" />
+    <ClInclude Include="RenderPassGenerateMipmap.h" />
+    <ClInclude Include="RenderPassHiZ.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{99a5017a-77c3-4fd6-a715-79e23e5d2da4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

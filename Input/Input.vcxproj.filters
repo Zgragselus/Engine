@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Input\Keyboard.cpp" />
+    <ClCompile Include="..\Source\Input\Mouse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Input\Input.h" />
+    <ClInclude Include="..\Source\Input\Keyboard.h" />
+    <ClInclude Include="..\Source\Input\Mouse.h" />
+  </ItemGroup>
+</Project>

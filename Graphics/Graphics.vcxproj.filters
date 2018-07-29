@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\BlendState.cpp">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\RasterizerState.cpp">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\D3DRenderer.cpp">
+      <Filter>D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\DescriptorHeap.cpp">
+      <Filter>D3D12\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Pipeline\PipelineState.cpp">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\CommandAllocator.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\D3DShader.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\Common.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\D3DUploader.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\DescriptorHandle.cpp">
+      <Filter>D3D12\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\D3DSwapChain.cpp">
+      <Filter>D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Texture\Texture.cpp">
+      <Filter>D3D12\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuResource.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\PixelBuffer.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\DepthBuffer.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\ColorBuffer.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuBuffer.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\Context.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\CommandQueue.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\LinearAllocator.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Core\RootSignature.cpp">
+      <Filter>D3D12\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Common\Mesh\Mesh.cpp">
+      <Filter>Common\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Common\Manager\Manager.cpp">
+      <Filter>Common\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Resource\GpuMappedBuffer.cpp">
+      <Filter>D3D12\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Texture\Sampler.cpp">
+      <Filter>D3D12\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\D3D12\Heap\QueryHeap.cpp">
+      <Filter>D3D12\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Common\Texture\TextureAtlas.cpp">
+      <Filter>Common\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Common\Mesh\Model.cpp">
+      <Filter>Common\Mesh</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Graphics\Graphics.h" />
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\BlendState.h">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\RasterizerState.h">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\D3DRenderer.h">
+      <Filter>D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\DescriptorHeap.h">
+      <Filter>D3D12\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Pipeline\PipelineState.h">
+      <Filter>D3D12\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandAllocator.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandList.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\CommandQueue.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\ResourceBarrier.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\D3DShader.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Common.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\RootSignature.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\D3DUploader.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\DescriptorHandle.h">
+      <Filter>D3D12\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\D3DSwapChain.h">
+      <Filter>D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Texture\Texture.h">
+      <Filter>D3D12\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Fence.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuResource.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\PixelBuffer.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\DepthBuffer.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\ColorBuffer.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuBuffer.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Core\Context.h">
+      <Filter>D3D12\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\LinearAllocator.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Camera\Camera.h">
+      <Filter>Common\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Camera\OrthoCamera.h">
+      <Filter>Common\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Camera\PerspectiveCamera.h">
+      <Filter>Common\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Mesh\Mesh.h">
+      <Filter>Common\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Manager\Manager.h">
+      <Filter>Common\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Resource\GpuMappedBuffer.h">
+      <Filter>D3D12\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Texture\Sampler.h">
+      <Filter>D3D12\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\D3D12\Heap\QueryHeap.h">
+      <Filter>D3D12\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Light\DirectionalLight.h">
+      <Filter>Common\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Light\Light.h">
+      <Filter>Common\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Light\PointLight.h">
+      <Filter>Common\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Light\SpotLight.h">
+      <Filter>Common\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Texture\TextureAtlas.h">
+      <Filter>Common\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Common\Mesh\Model.h">
+      <Filter>Common\Mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="D3D12">
+      <UniqueIdentifier>{a8dc8b07-cbb5-4cfb-a259-b591a1ea6b86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D12\Pipeline">
+      <UniqueIdentifier>{a2e9293f-f8dc-4ac5-94bf-2c926f683caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D12\Heap">
+      <UniqueIdentifier>{b5986a2d-7c81-433b-85f3-58ae30182cc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D12\Core">
+      <UniqueIdentifier>{52cc67d1-637b-4869-b695-993ac036412b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D12\Texture">
+      <UniqueIdentifier>{d6cab185-76de-47f3-86b0-c7ee948b73b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D12\Resource">
+      <UniqueIdentifier>{208242b8-3874-4db3-88ab-a53e76d8af71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{c30998ac-3a80-4aea-960d-8eef8aaf792a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Manager">
+      <UniqueIdentifier>{992fce26-07dd-4a06-8395-a98664fc3524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Camera">
+      <UniqueIdentifier>{6201d7ec-396f-40cf-aace-31879fc2999b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Mesh">
+      <UniqueIdentifier>{455f1ffa-270e-491e-9cfe-448f0ddf4dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Light">
+      <UniqueIdentifier>{b7c7cf8e-dbf6-47d7-9b27-4ea9f83549df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Texture">
+      <UniqueIdentifier>{1314c6e2-8f62-4ae2-af45-ea457427cdd7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Physics\Simulation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Physics\Simulation.h" />
+    <ClInclude Include="..\Source\Physics\Shapes\Shape.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Primitive\Box.h">
+      <Filter>Shapes\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Primitive\Capsule.h">
+      <Filter>Shapes\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Primitive\Cone.h">
+      <Filter>Shapes\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Primitive\Cylinder.h">
+      <Filter>Shapes\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Primitive\Sphere.h">
+      <Filter>Shapes\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Mesh\ConvexHull.h">
+      <Filter>Shapes\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Mesh\TriangleMesh.h">
+      <Filter>Shapes\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Shapes\Compound\Compound.h">
+      <Filter>Shapes\Compound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Physics\Body\RigidBody.h">
+      <Filter>Body</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shapes">
+      <UniqueIdentifier>{406bab55-aa12-4a64-a43a-50a5b38ee49d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shapes\Compound">
+      <UniqueIdentifier>{7d72f92c-65e8-4901-bba9-43c2d881177c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shapes\Mesh">
+      <UniqueIdentifier>{f2cd67ee-59ea-47c0-8189-4d4f8fe89b8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shapes\Primitive">
+      <UniqueIdentifier>{242195ba-0d7c-4999-a520-e50b5866362a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Body">
+      <UniqueIdentifier>{c8a59f06-a1fd-4593-9ac9-651f60e37a1c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6e0eb45a-8705-4324-8570-33d31bb03222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{28b0e256-0262-4bfb-9aaa-35ad8aaf5ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Loader">
+      <UniqueIdentifier>{59d0e8b3-0252-4fb6-af58-0578a74619ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Component">
+      <UniqueIdentifier>{7668fbf4-e998-4299-b285-b36b745178ba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Game\Scene\Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\ComponentTypeId.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\GameObject.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Loader\Assimp.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Loader\DevIL.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Scene\BVH.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Scene\RenderNode.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Scene\Command.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Scene\State.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Scene\UndoRedo.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\ComponentStatic.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\ComponentFactory.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Game\Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\SceneMap.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Game.h" />
+    <ClInclude Include="..\Source\Game\Entity\Component.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\ComponentTypeId.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\GameObject.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Transformation.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Loader\Assimp.h">
+      <Filter>Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\MeshComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\CameraComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\RenderNode.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Loader\DevIL.h">
+      <Filter>Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\TextureComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\MaterialComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\LightComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\BVH.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\Command.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\State.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Scene\UndoRedo.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\ComponentStatic.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\CollisionComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\RigidBodyComponent.h">
+      <Filter>Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\ComponentFactory.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

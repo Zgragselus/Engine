@@ -1,0 +1,7 @@
+namespace Raytracer
+{
+	class Raytracer
+	{
+
+	};
+}
