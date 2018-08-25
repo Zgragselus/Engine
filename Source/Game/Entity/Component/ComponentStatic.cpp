@@ -87,15 +87,15 @@ bool LightComponent::Editor(std::string& prev, std::string& next)
 		break;
 
 	case Light::ShadowFilter::PCSS:
-		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 5.0f, "%.4f")) { change = true; }
+		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 10.0f, "%.4f")) { change = true; }
 		break;
 
 	case Light::ShadowFilter::PCMLSM:
-		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 5.0f, "%.4f")) { change = true; }
+		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 20.0f, "%.4f")) { change = true; }
 		break;
 
 	case Light::ShadowFilter::BACKPROJECTION:
-		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 5.0f, "%.4f")) { change = true; }
+		if (ImGui::DragFloat("Light Size", &lightSize, 0.05f, 0.0f, 50.0f, "%.4f")) { change = true; }
 		break;
 	}
 

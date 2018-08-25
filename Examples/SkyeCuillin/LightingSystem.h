@@ -349,7 +349,7 @@ namespace SkyeCuillin
 		{
 			mShadowAtlasResolution = resolution;
 
-			mShadowColorMap = new Engine::ColorBuffer(renderer, 0.0f, 0.0f, 0.0f, 1.0f);
+			mShadowColorMap = new Engine::ColorBuffer(renderer, 1.0f, 1.0f, 0.0f, 1.0f);
 			mShadowColorMap->Create(mShadowAtlasResolution, mShadowAtlasResolution, 0, Engine::Graphics::Format::RG32F);
 			mMiplevels = mShadowColorMap->GetNumMipMaps();
 
@@ -591,7 +591,7 @@ namespace SkyeCuillin
 			context->SetDescriptorHeap(Engine::DescriptorHeap::CBV_SRV_UAV, heap);
 			context->TransitionResource(mShadowColorMap, D3D12_RESOURCE_STATE_RENDER_TARGET, true);
 			context->SetRenderTargets(mShadowColorMap, mShadowDepthMap);
-			context->ClearColor(mShadowColorMap, 0.0f, 0.0f, 0.0f, 1.0f);
+			context->ClearColor(mShadowColorMap, 1.0f, 1.0f, 0.0f, 1.0f);
 			context->ClearDepth(mShadowDepthMap, 1.0f, 0);
 			context->SetPrimitiveTopology(Engine::Graphics::TRIANGLELIST);
 			context->SetConstantBuffer(0, mConstBuffer->GetGpuVirtualAddress());

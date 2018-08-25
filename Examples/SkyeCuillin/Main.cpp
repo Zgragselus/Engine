@@ -174,6 +174,7 @@ public:
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		loader->SetManagers(mMeshManager, mModelManager, mTextureManager);
 		Engine::Entity* ent = loader->Load("../Data/Example05/Sponza/sponza.obj");
+		//Engine::Entity* ent = loader->Load("../Data/Shared/Models/environment.obj");
 		Engine::Entity* ent2 = loader->Load("../Data/Shared/Models/sphere.obj");
 		//ent2->Transformation().SetTranslation(Engine::float4(310.0f, 210.0f, -180.0f, 1.0f));
 		ent2->Transformation().SetTranslation(Engine::float4(-1096.0f, 27.0f, 10.0f, 1.0f));
@@ -251,14 +252,14 @@ public:
 
 		/*for (int i = 0; i < 2; i++)
 		{
-			ent = new Engine::Entity();
+			ent = new Engine::Entity("SpotLight" + std::to_string(i));
 			ent->Transformation().SetTranslation(Engine::float4((float)(rand() % 900 - 450), (float)(rand() % 100 + 50), (float)(rand() % 160 - 80), 1.0f));
 			ent->Transformation().Update();
 			Engine::SpotLight* spotlight = new Engine::SpotLight(Engine::float4(1.0f, 1.0f, 1.0f, 1.0f), 
 				Engine::normalize(Engine::float4(rand() % 100 - 50, rand() % 100 - 50, rand() % 100 - 50, 0.0f)), 
 				Engine::Math::PI / 4.0f, 0.0f, 0.0f);
 			ent->GameObject().Add<Engine::LightComponent>(spotlight);
-			mScene->AddEntity(ent, -1, "SpotLight");
+			mScene->AddEntity(ent, -1);
 		}*/
 
 		ent = new Engine::Entity("Camera");

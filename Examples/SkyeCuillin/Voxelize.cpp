@@ -53,8 +53,8 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 	Engine::DepthStencilState dsState = Engine::DepthStencilState(false);
 	
 	std::vector<Engine::Graphics::Format> rtvFormats;
-	//rtvFormats.push_back(Engine::Graphics::Format::RGBA8);
-	rtvFormats.push_back(Engine::Graphics::Format::RGBA16F);
+	rtvFormats.push_back(Engine::Graphics::Format::RGBA8);
+	//rtvFormats.push_back(Engine::Graphics::Format::RGBA16F);
 	
 	mVoxelizePS = new Engine::PipelineState(renderer->GetDevice(),
 		mVoxelizeRS,

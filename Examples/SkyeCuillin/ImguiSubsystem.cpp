@@ -119,6 +119,29 @@ void ImguiSubsystem::RenderGui(ImDrawData* draw_data)
 	this->mContext->SetConstants(0, Engine::DWParam(io.DisplaySize.x), Engine::DWParam(io.DisplaySize.y));
 	this->mContext->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(1, this->mGuiFont->GetSRV().mGpuHandle);
 
+	// TODO: Grow index and vertex buffer if and when necessary
+
+	/*this->mContext->TransitionResource(this->mGuiVBO, D3D12_RESOURCE_STATE_COPY_DEST, false);
+	this->mContext->TransitionResource(this->mGuiIBO, D3D12_RESOURCE_STATE_COPY_DEST, true);
+
+	size_t vtxOffset = 0;
+	size_t idxOffset = 0;
+
+	for (int n = 0; n < draw_data->CmdListsCount; n++)
+	{
+		const ImDrawList* cmd_list = draw_data->CmdLists[n];
+		this->mContext->WriteBuffer(this->mGuiVBO, vtxOffset, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
+		this->mContext->WriteBuffer(this->mGuiIBO, vtxOffset, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
+		vtxOffset += cmd_list->VtxBuffer.Size * sizeof(ImDrawVert);
+		idxOffset += cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx);
+	}
+
+	this->mContext->TransitionResource(this->mGuiVBO, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, false);
+	this->mContext->TransitionResource(this->mGuiIBO, D3D12_RESOURCE_STATE_INDEX_BUFFER, true);
+
+	this->mContext->SetIndexBuffer(this->mGuiIBO->IndexBufferView(0, (unsigned int)draw_data->TotalIdxCount));
+	this->mContext->SetVertexBuffer(0, this->mGuiVBO->VertexBufferView(0, (unsigned int)draw_data->TotalVtxCount, sizeof(ImDrawVert)));*/
+
 	for (int n = 0; n < draw_data->CmdListsCount; n++)
 	{
 		int idx_offset = 0;
