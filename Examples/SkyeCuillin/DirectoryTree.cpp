@@ -19,7 +19,9 @@ DirectoryTree::Record* DirectoryTree::CreateSubtree(const std::string& directory
 		else
 		{
 			printf("%s\n", (directory + "/" + list[i]).c_str());
-			r->mChildren.push_back(new Record(Type::FILE, list[i]));
+			Record* rec = new Record(Type::FILE, list[i]);
+			ProcessFile(rec, directory + "/" + list[i]);
+			r->mChildren.push_back(rec);
 		}
 	}
 
@@ -28,33 +30,41 @@ DirectoryTree::Record* DirectoryTree::CreateSubtree(const std::string& directory
 
 void DirectoryTree::ProcessFile(Record* r, const std::string& file)
 {
-	Engine::LoaderDevIL loader(mLog);
-	//Engine::LoaderAssimp loader(mLog, mRenderer);
+	Engine::LoaderDevIL textureLoader(mLog);
+	Engine::LoaderAssimp modelLoader(mLog, mRenderer);
 
 	if (file.find(".tga") != std::string::npos)
 	{
 		Engine::Manager<Engine::Texture>::Node* node = mTextureManager->GetNode(file);
-		if (node != nullptr)
+
+		Engine::LoaderDevIL::Image* image = textureLoader.Load(file);
+		if (image != nullptr)
 		{
-			Engine::LoaderDevIL::Image* image = loader.Load(file);
-			if (image != nullptr)
-			{
-				image->mUseAlphaMipmap = false;
-				loader.GenerateMipmaps(image);
-			}
-			Engine::Texture* t = new Engine::Texture(file);
-			t->InitMipmaps(mRenderer, image->mWidth, image->mHeight, 1, image->mMipLevels, Engine::Graphics::RGBA8, (const void**)image->mMipmaps);
-			t->SetName(file);
+			image->mUseAlphaMipmap = false;
+			textureLoader.GenerateMipmaps(image);
+		}
+		Engine::Texture* t = new Engine::Texture(file);
+		t->InitMipmaps(mRenderer, image->mWidth, image->mHeight, 1, image->mMipLevels, Engine::Graphics::RGBA8, (const void**)image->mMipmaps);
+		t->SetName(file);
+		if (node == nullptr)
+		{
+			mTextureManager->Insert<Engine::Texture>(file, t);
+			node = mTextureManager->GetNode(file);
+		}
+		else
+		{
 			delete node->mItem;
 			node->mItem = t;
-			delete image;
-
-			r->mResourceType = ResourceType::TEXTURE;
-			r->mResource = node;
 		}
+		delete image;
+
+		r->mResourceType = ResourceType::TEXTURE;
+		r->mResource = node;
 	}
 	else if (file.find(".obj") != std::string::npos)
 	{
+		Engine::Manager<Engine::Model>::Node* node = mModelManager->GetNode(file);
+
 		/*Engine::Manager<Engine::Model>::Node* node = mModelManager->GetNode(file);
 		if (node != nullptr)
 		{
@@ -170,6 +180,26 @@ void DirectoryTree::_ImguiRenderRecord(Record* r)
 
 			if (r->mChildren[i]->mType != Type::DIRECTORY)
 			{
+				if (ImGui::BeginDragDropSource())
+				{
+					printf("%d\n", r->mChildren[i]->mResourceType);
+					switch (r->mChildren[i]->mResourceType)
+					{
+					case ResourceType::MODEL:
+						ImGui::SetDragDropPayload("RESOURCE_MODEL", &(r->mChildren[i]), sizeof(Record*));
+						break;
+
+					case ResourceType::TEXTURE:
+						ImGui::SetDragDropPayload("RESOURCE_TEXTURE", &(r->mChildren[i]->mResource), sizeof(void*));
+						ImGui::Image((ImTextureID)(((Engine::Manager<Engine::Texture>::Node*)r->mChildren[i]->mResource)->mItem->GetSRV().mGpuHandle.ptr), ImVec2(64, 64));
+						break;
+
+					default:
+						break;
+					}
+					ImGui::EndDragDropSource();
+				}
+
 				if (ImGui::IsItemClicked())
 				{
 					printf("%s\n", r->mChildren[i]->mName.c_str());
@@ -197,17 +227,20 @@ DirectoryTree::DirectoryTree(const std::string& directory, Engine::Constants* op
 	std::string path = directory;
 	std::replace(path.begin(), path.end(), '\\', '/');
 
-	mRoot = CreateSubtree(path);
+	mPath = path;
 	mOptions = options;
 	mLog = log;
 	mRenderer = renderer;
-
-	mTextureManager = nullptr;
 }
 
 DirectoryTree::~DirectoryTree()
 {
 	delete mRoot;
+}
+
+void DirectoryTree::Initialize()
+{
+	mRoot = CreateSubtree(mPath);
 }
 
 void DirectoryTree::SetManagers(Engine::Manager<Engine::Mesh>* meshManager, Engine::Manager<Engine::Model>* modelManager, Engine::Manager<Engine::Texture>* textureManager)

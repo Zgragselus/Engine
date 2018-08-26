@@ -108,9 +108,9 @@ namespace SkyeCuillin
 			mActiveAxis = -1;
 			mActivePlane = -1;
 
-			mHoveringID = -1;
+			/*mHoveringID = -1;
 			mPrevClickedID = -1;
-			mClickedID = -1;
+			mClickedID = -1;*/
 		}
 
 		~Editor()
@@ -123,9 +123,9 @@ namespace SkyeCuillin
 
 	private:
 		// Drag & Drop of entities
-		int mHoveringID;
+		/*int mHoveringID;
 		int mPrevClickedID;
-		int mClickedID;
+		int mClickedID;*/
 
 		void RefreshAxis()
 		{
@@ -254,6 +254,40 @@ namespace SkyeCuillin
 
 			RefreshAxis();
 			RefreshPlanes();
+		}
+
+		void ScenegraphReassing(int newParentId)
+		{
+			// Drag & Drop changes parent of selected entities, we need:
+			// - pair of selected entityID and their parentID before re-assignment
+			// - separator (-1)
+			// - pair of selected entityID and their new parentID after re-assignment
+			Engine::Command* cmd = new Engine::Command(Engine::Command::Reassign);
+
+			// Before pairs
+			for (int id : mScene->GetState()->GetSelection())
+			{
+				Engine::Entity* e = mScene->GetEntity(id);
+				int parent = e->GetParent()->mSceneID;
+
+				cmd->AddArg<int>(id);
+				cmd->AddArg<int>(parent);
+			}
+
+			// Separator
+			cmd->AddArg<int>(-1);
+
+			// After pairs
+			for (int id : mScene->GetState()->GetSelection())
+			{
+				Engine::Entity* e = mScene->GetEntity(id);
+				int parent = e->GetParent()->mSceneID;
+
+				cmd->AddArg<int>(id);
+				cmd->AddArg<int>(newParentId);
+			}
+			mScene->Apply(cmd);
+			mChange = true;
 		}
 
 	public:
@@ -1026,7 +1060,7 @@ namespace SkyeCuillin
 			}
 		}
 
-		void TreeViewPress(int button)
+		/*void TreeViewPress(int button)
 		{
 
 		}
@@ -1037,7 +1071,7 @@ namespace SkyeCuillin
 			{
 				mClickedID = -1;
 			}
-		}
+		}*/
 
 		void ImguiSelectionEditor()
 		{
@@ -1231,18 +1265,24 @@ namespace SkyeCuillin
 					(mScene->GetState()->GetSelection().find(node.first) == mScene->GetState()->GetSelection().end() ? 0 : ImGuiTreeNodeFlags_Selected) |
 					(child->Children().size() == 0 ? ImGuiTreeNodeFlags_Leaf : 0) |
 					ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen);
-
-				if (ImGui::IsItemHoveredRect())
+				
+				if (ImGui::BeginDragDropSource())
 				{
-					mHoveringID = node.first;
+					ImGui::SetDragDropPayload("SCENEGRAPH_NODE", &node, sizeof(std::pair<int, Engine::Entity*>));
+					ImGui::Text(mScene->GetName(node.first).c_str());
+					ImGui::EndDragDropSource();
+				}
+
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCENEGRAPH_NODE"))
+					{
+						ScenegraphReassing(node.first);
+					}
+					ImGui::EndDragDropTarget();
 				}
 
 				if (ImGui::IsItemClicked())
-				{
-					mClickedID = node.first;
-				}
-
-				if (mHoveringID == node.first && mPrevClickedID == node.first && mClickedID == -1)
 				{
 					if (!mShiftPressed)
 					{
@@ -1288,62 +1328,24 @@ namespace SkyeCuillin
 		void ImguiScenegraphEditor()
 		{
 			ImGuiIO& io = ImGui::GetIO();
-			mHoveringID = -1;
 
 			std::pair<int, Engine::Entity*> node = std::pair<int, Engine::Entity*>(mScene->GetScenegraph()->mSceneID, mScene->GetScenegraph());
 
 			ImGui::SetNextTreeNodeOpen(true);
 			if (ImGui::TreeNodeEx(mScene->GetName(node.first).c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				if (ImGui::IsItemHoveredRect())
+				if (ImGui::BeginDragDropTarget())
 				{
-					mHoveringID = node.first;
-				}
-
-				if (ImGui::IsItemClicked())
-				{
-					mClickedID = node.first;
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SCENEGRAPH_NODE"))
+					{
+						ScenegraphReassing(node.first);
+					}
+					ImGui::EndDragDropTarget();
 				}
 
 				_ImguiScenegraphEditor(node);
 				ImGui::TreePop();
 			}
-
-			if (mHoveringID != mPrevClickedID && mHoveringID != -1 && mPrevClickedID != -1 && mClickedID == -1)
-			{
-				// Drag & Drop changes parent of selected entities, we need:
-				// - pair of selected entityID and their parentID before re-assignment
-				// - separator (-1)
-				// - pair of selected entityID and their new parentID after re-assignment
-				Engine::Command* cmd = new Engine::Command(Engine::Command::Reassign);
-
-				// Before pairs
-				for (int id : mScene->GetState()->GetSelection())
-				{
-					Engine::Entity* e = mScene->GetEntity(id);
-					int parent = e->GetParent()->mSceneID;
-
-					cmd->AddArg<int>(id);
-					cmd->AddArg<int>(parent);
-				}
-
-				// Separator
-				cmd->AddArg<int>(-1);
-
-				// After pairs
-				for (int id : mScene->GetState()->GetSelection())
-				{
-					Engine::Entity* e = mScene->GetEntity(id);
-					int parent = e->GetParent()->mSceneID;
-
-					cmd->AddArg<int>(id);
-					cmd->AddArg<int>(mHoveringID);
-				}
-				mScene->Apply(cmd);
-				mChange = true;
-			}
-
-			mPrevClickedID = mClickedID;
 		}
 
 		template <typename T>

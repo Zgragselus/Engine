@@ -14,7 +14,8 @@ namespace SkyeCuillin
 		enum class ResourceType
 		{
 			TEXTURE,
-			MODEL
+			MODEL,
+			NONE
 		};
 
 	private:
@@ -34,6 +35,8 @@ namespace SkyeCuillin
 		Engine::Manager<Engine::Model>* mModelManager;
 		Engine::Manager<Engine::Texture>* mTextureManager;
 
+		std::string mPath;						// Root directory tree path
+
 		struct Record
 		{
 			Type mType;
@@ -47,6 +50,7 @@ namespace SkyeCuillin
 			{
 				mType = type;
 				mName = name;
+				mResourceType = ResourceType::NONE;
 			}
 
 			~Record()
@@ -74,6 +78,8 @@ namespace SkyeCuillin
 		DirectoryTree(const std::string& directory, Engine::Constants* options, Engine::Log* log, Engine::D3DRenderer* renderer);
 
 		~DirectoryTree();
+
+		void Initialize();
 
 		void SetManagers(Engine::Manager<Engine::Mesh>* meshManager, Engine::Manager<Engine::Model>* modelManager, Engine::Manager<Engine::Texture>* textureManager);
 

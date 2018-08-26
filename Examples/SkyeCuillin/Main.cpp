@@ -143,6 +143,7 @@ public:
 			watch->SetDirectoryTree(mDirTree);
 		}
 		mDirTree->SetManagers(mMeshManager, mModelManager, mTextureManager);
+		mDirTree->Initialize();
 
 		int w;
 		int h;
@@ -874,7 +875,7 @@ public:
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[bp.mButton] = true;
-		mEditor->TreeViewPress(bp.mButton);
+		//mEditor->TreeViewPress(bp.mButton);
 
 		/*if (bp.mButton == 0)
 		{
@@ -896,7 +897,7 @@ public:
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[br.mButton] = false;
-		mEditor->TreeViewRelease(br.mButton);
+		//mEditor->TreeViewRelease(br.mButton);
 
 		if (!io.WantCaptureMouse)
 		{
