@@ -46,7 +46,7 @@ namespace Engine
 		Mesh* InitMesh(const aiMesh* mesh, unsigned int* materialId, float4& translate, std::string& name);
 
 		void InitMaterial(const LoaderDevIL& loader, const std::string& path, const aiMaterial* mat);
-		Entity* LoadFromScene(const std::string& path, const std::string& filename, const aiScene* scene, unsigned int flags);
+		Model* LoadFromScene(const std::string& path, const std::string& filename, const aiScene* scene, unsigned int flags);
 		void InitializeTexture(Engine::LoaderDevIL::Image* image, const std::string& imageName, std::vector<Engine::Texture*>& textureList);
 
 	public:
@@ -54,6 +54,9 @@ namespace Engine
 		{
 			mLog = l;
 			mRenderer = r;
+
+			mMeshManager = nullptr;
+			mModelManager = nullptr;
 			mTextureManager = nullptr;
 		}
 
@@ -69,7 +72,7 @@ namespace Engine
 			mTextureHeap = textureHeap;
 		}
 
-		Entity* Load(const std::string& filename, unsigned int flags = 0);
+		Model* Load(const std::string& filename, unsigned int flags = 0);
 
 		ALIGNED_NEW_DELETE("Game::Loader::Assimp")
 	};

@@ -105,6 +105,7 @@ Mesh* LoaderAssimp::InitMesh(const aiMesh* mesh, unsigned int* materialId, float
 	}
 
 	Mesh* m = new Mesh(mRenderer, mVertexData, sizeof(float) * 16, mNumVertices, mIndices, mNumIndices);
+	m->SetName(name);
 	m->Bounds() = bounds;
 
 	mLog->Print("LoaderAssimp", "Initialized mesh with " + std::to_string(mNumVertices) + " vertices and " + std::to_string(mNumIndices) + " indexes");
@@ -237,7 +238,7 @@ void LoaderAssimp::InitializeTexture(Engine::LoaderDevIL::Image* image, const st
 	}
 }
 
-Entity* LoaderAssimp::LoadFromScene(const std::string& path, const std::string& filename, const aiScene* scene, unsigned int flags)
+Model* LoaderAssimp::LoadFromScene(const std::string& path, const std::string& filename, const aiScene* scene, unsigned int flags)
 {
 	int materials = scene->mNumMaterials;
 
@@ -269,16 +270,19 @@ Entity* LoaderAssimp::LoadFromScene(const std::string& path, const std::string& 
 	int meshes = scene->mNumMeshes;
 
 	std::string modelName = String::Filename(filename);
+	
+	Model* mdl = new Model(modelName);
+	mdl->SetManagers(mMeshManager, mTextureManager);
 
-	Entity* ent = new Entity(modelName);
+	//Entity* ent = new Entity(modelName);
 
 	for (int i = 0; i < meshes; i++)
 	{
 		unsigned int matID;
-		float4 translate = mat4();
-		std::string name;
-		Mesh* m = InitMesh(scene->mMeshes[i], &matID, translate, name);
+		float4 translate = float4();
 
+		std::string name; 
+		Mesh* m = InitMesh(scene->mMeshes[i], &matID, translate, name);
 		name = modelName + "_" + name;
 
 		if (mMeshManager && name.length() > 0)
@@ -291,48 +295,69 @@ Entity* LoaderAssimp::LoadFromScene(const std::string& path, const std::string& 
 			{
 				Manager<Mesh>::Node* stored = mMeshManager->GetNode(name);
 				unsigned int temp = 0;
+				std::string originalName = name;
 				while (stored && (stored->Get()->GetIndexBuffer()->NumElements() != m->GetIndexBuffer()->NumElements() ||
 								  stored->Get()->GetVertexBuffer()->NumElements() != m->GetVertexBuffer()->NumElements()))
 				{
 					mLog->Print("LoaderAssimp", std::string("Warning: Mesh name '") + name + std::string("' is not unique!"));
-					name = name + std::to_string(temp);
+					name = originalName + "_" + std::to_string(temp);
 					stored = mMeshManager->GetNode(name);
+					temp++;
 				}
 			}
 			else
 			{
 				Manager<Mesh>::Node* stored = mMeshManager->GetNode(name);
 				unsigned int temp = 0;
+				std::string originalName = name;
 				while (stored)
 				{
 					mLog->Print("LoaderAssimp", std::string("Warning: Mesh name '") + name + std::string("' is not unique!"));
-					name = name + std::to_string(temp);
+					name = originalName + "_" + std::to_string(temp);
 					stored = mMeshManager->GetNode(name);
+					temp++;
 				}
 			}
 
+			m->SetName(name);
 			m = mMeshManager->Insert<Mesh>(name, m);
 		}
 
+		mdl->AddMesh(translate, m, std::vector<Manager<Texture>::Node*>({ mTextureManager->GetNode(textures[matID * 5]),
+			mTextureManager->GetNode(textures[matID * 5 + 1]),
+			mTextureManager->GetNode(textures[matID * 5 + 2]),
+			mTextureManager->GetNode(textures[matID * 5 + 3]),
+			mTextureManager->GetNode(textures[matID * 5 + 4]) }));
+
 		mLog->Print("LoaderAssimp", name);
-		Entity* child = new Entity(name, ent);
+		/*Entity* child = new Entity(name, ent);
 		child->GameObject().Add<Engine::MeshComponent>(m, mMeshManager);
 		//child->GameObject().Add<Engine::TextureComponent>(textures[matID * 5 + 4]);
 		child->GameObject().Add<Engine::MaterialComponent>(textures[matID * 5], textures[matID * 5 + 1], textures[matID * 5 + 4], textures[matID * 5 + 3], textures[matID * 5 + 2], mTextureManager);
 		//child->Transformation().Extract(transpose(trans));
 		//child->Transformation().Update();
-		child->Transformation().SetTranslation(translate);
+		child->Transformation().SetTranslation(translate);*/
 	}
 
 	mLog->Print("LoaderAssimp", "Model initialized!");
 
 	mMaterialsTmp.clear();
 
-	return ent;
+	mModelManager->Insert(filename, mdl);
+
+	//return ent;
+
+	return mdl;
 }
 
-Entity* LoaderAssimp::Load(const std::string& filename, unsigned int flags)
+Model* LoaderAssimp::Load(const std::string& filename, unsigned int flags)
 {
+	if (mMeshManager == nullptr || mModelManager == nullptr || mTextureManager == nullptr)
+	{
+		mLog->Print("LoaderAssimg", "Error: Managers NOT set");
+		return nullptr;
+	}
+	
 	if (!Files::Exists(filename))
 	{
 		mLog->Print("LoaderAssimp", std::string("File ") + filename + std::string(" does not exist!"));
@@ -354,8 +379,7 @@ Entity* LoaderAssimp::Load(const std::string& filename, unsigned int flags)
 	if (scene != NULL)
 	{
 		std::string path = Files::GetFolder(filename);
-		Entity* ent = LoadFromScene(path, filename, scene, flags);
-		return ent;
+		return LoadFromScene(path, filename, scene, flags);
 	}
 	else
 	{

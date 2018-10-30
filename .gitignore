@@ -28,3 +28,20 @@
 *.out
 *.app
 
+/.vs/Engine/v15/ipch/AutoPCH
+/.vs/Engine/v15
+/Data/Example05/Sponza
+/Bin64
+*.tlog
+*.idb
+*.pdb
+*.log
+/Data/Shared
+*.png
+*.mtl
+*.gui
+*.fnt
+/Dependencies
+*.ilk
+*.ipdb
+*.iobj

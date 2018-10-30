@@ -37,6 +37,7 @@ namespace Engine
 		AABB mBounds;
 		GpuBuffer* mVertexBuffer;
 		GpuBuffer* mIndexBuffer;
+		std::string mName;
 
 	public:
 		/// <summary>Mesh constructor</summary>
@@ -75,6 +76,16 @@ namespace Engine
 		inline GpuBuffer* GetIndexBuffer()
 		{
 			return mIndexBuffer;
+		}
+
+		inline void SetName(const std::string& name)
+		{
+			mName = name;
+		}
+
+		inline const std::string& GetName() const
+		{
+			return mName;
 		}
 
 		friend inline bool operator==(const Mesh& a, const Mesh& b)

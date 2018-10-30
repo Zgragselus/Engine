@@ -100,6 +100,12 @@ namespace Engine
 			return (mRedo.size() > 0);
 		}
 
+		inline void Clear()
+		{
+			mUndo.clear();
+			mRedo.clear();
+		}
+
 		ALIGNED_NEW_DELETE("UndoRedo")
 	};
 }

@@ -32,6 +32,7 @@ void DirectoryTree::ProcessFile(Record* r, const std::string& file)
 {
 	Engine::LoaderDevIL textureLoader(mLog);
 	Engine::LoaderAssimp modelLoader(mLog, mRenderer);
+	modelLoader.SetManagers(mMeshManager, mModelManager, mTextureManager);
 
 	if (file.find(".tga") != std::string::npos)
 	{
@@ -64,6 +65,21 @@ void DirectoryTree::ProcessFile(Record* r, const std::string& file)
 	else if (file.find(".obj") != std::string::npos)
 	{
 		Engine::Manager<Engine::Model>::Node* node = mModelManager->GetNode(file);
+
+		Engine::Model* mdl = modelLoader.Load(file);
+		if (node == nullptr)
+		{
+			mModelManager->Insert<Engine::Model>(file, mdl);
+			node = mModelManager->GetNode(file);
+		}
+		else
+		{
+			delete node->mItem;
+			node->mItem = mdl;
+		}
+		
+		r->mResourceType = ResourceType::MODEL;
+		r->mResource = node;
 
 		/*Engine::Manager<Engine::Model>::Node* node = mModelManager->GetNode(file);
 		if (node != nullptr)
@@ -182,11 +198,12 @@ void DirectoryTree::_ImguiRenderRecord(Record* r)
 			{
 				if (ImGui::BeginDragDropSource())
 				{
-					printf("%d\n", r->mChildren[i]->mResourceType);
+					printf("%lx\n", r->mChildren[i]->mResource);
 					switch (r->mChildren[i]->mResourceType)
 					{
 					case ResourceType::MODEL:
-						ImGui::SetDragDropPayload("RESOURCE_MODEL", &(r->mChildren[i]), sizeof(Record*));
+						ImGui::SetDragDropPayload("RESOURCE_MODEL", &(r->mChildren[i]->mResource), sizeof(Record*));
+						ImGui::Text("%s", r->mChildren[i]->mName);
 						break;
 
 					case ResourceType::TEXTURE:

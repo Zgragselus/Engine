@@ -220,9 +220,9 @@ Output PS(Input input)
 	float3 color = ToneMap(diffuse.Load(coord, 0).xyz, avgLuminance, 0, exposure);
 	float3 bloom = bloomResult.Sample(diffuseSampler, input.texCoord).xyz;
 	float3 lensFlare = LensFlare(input.texCoord);
-	//color = color + bloom * BloomMagnitude + lensFlare * dirt * 0.5f;
+	color = color + bloom * BloomMagnitude + lensFlare * dirt * 0.5f;
 	//color = color + bloom * BloomMagnitude;
-	color = diffuse.Load(coord, 0).xyz;
+	//color = diffuse.Load(coord, 0).xyz;
 	color.x = pow(max(color.x, 0.0f), 1.0f / 2.2f);
 	color.y = pow(max(color.y, 0.0f), 1.0f / 2.2f);
 	color.z = pow(max(color.z, 0.0f), 1.0f / 2.2f);

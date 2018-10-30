@@ -26,6 +26,11 @@ namespace Engine
 		{
 			return mSelection;
 		}
+
+		void Clear()
+		{
+			mSelection.clear();
+		}
 	};
 }
 

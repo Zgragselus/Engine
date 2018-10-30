@@ -3,6 +3,7 @@
 
 #include "Main.h"
 #include "../Dependencies/Imgui/imgui.h"
+#include "../Dependencies/Imgui/imgui_internal.h"
 #include "Graphics/Graphics.h"
 
 namespace SkyeCuillin

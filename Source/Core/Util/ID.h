@@ -74,6 +74,17 @@ namespace Engine
 			mFree.emplace(id);
 		}
 
+		/// <summary>Clear</summary>
+		inline void Clear()
+		{
+			while (!mFree.empty())
+			{
+				mFree.pop();
+			}
+
+			mNext = 1;
+		}
+
 		ALIGNED_NEW_DELETE("Engine::ID")
 	};
 }

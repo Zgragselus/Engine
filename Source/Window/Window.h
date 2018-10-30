@@ -26,6 +26,7 @@
 #include "Core/Scheduler/Scheduler.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
+#include "FileDialog.h"
 
 #ifdef _WIN32
 //#include <gl/GL.h>

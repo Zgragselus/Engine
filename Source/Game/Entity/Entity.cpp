@@ -58,8 +58,23 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 	// Restore parents
 	if (parent == nullptr)
 	{
-		Entity* parsedParent = scene->GetEntity(lines[2]);
-		parsedParent->AddChild(this);
+		if (lines.size() > 2)
+		{
+			Entity* parsedParent = scene->GetEntity(lines[2]);
+
+			if (parsedParent != nullptr)
+			{
+				parsedParent->AddChild(this);
+			}
+			else
+			{
+				scene->GetScenegraph()->AddChild(this);
+			}
+		}
+		else
+		{
+			scene->GetScenegraph()->AddChild(this);
+		}
 	}
 	else
 	{

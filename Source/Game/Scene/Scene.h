@@ -82,6 +82,10 @@ namespace Engine
 		/// Entities can't be removed right away, but only at sync point after rendering has been finished
 		std::vector<int> mToRemove;
 
+		/// <summary>Replacement scene flag</summary>
+		/// If set to non-nullptr, the replacement scene has to contain new scene root with which we want to replace 
+		Entity* mToReload;
+
 		void RecalculateGizmoPosition()
 		{
 			mMeanMatrix = mat4(0.0f);
@@ -100,6 +104,11 @@ namespace Engine
 			return mSimulationState;
 		}
 
+		inline void LoadScene(Entity* root)
+		{
+			mToReload = root;
+		}
+
 		inline void ProcessChanges()
 		{
 			for (int id : mToRemove)
@@ -108,6 +117,23 @@ namespace Engine
 			}
 
 			mToRemove.clear();
+
+			if (mToReload != nullptr)
+			{
+				mId.Clear();
+				mSearch.Clear();
+				mUndoRedo->Clear();
+				mState->Clear();
+				mSelectionPosition = float4();
+
+				delete mSceneGraph;
+				mSceneGraph = mToReload;
+				unsigned int id = mId.Next();
+				mSceneGraph->mSceneID = id;
+				mSearch.Add(id, "Root", mSceneGraph);
+
+				mToReload = nullptr;
+			}
 		}
 
 		/// <summary>
@@ -397,7 +423,7 @@ namespace Engine
 		/// <summary>Remove entity</summary>
 		/// <param name="id">ID of entity to remove</param>
 		void RemoveEntity(int id);
-
+		
 		ALIGNED_NEW_DELETE("Engine::Game::Scene")
 	};
 }

@@ -272,6 +272,17 @@ namespace Engine
 			}			
 		}
 
+		/// <summary>
+		/// Clear whole Id-Name-Data database
+		/// </summary>
+		inline void Clear()
+		{
+			mIdMap.clear();
+			mNameMap.clear();
+			mIdNameMap.clear();
+			mNameIdMap.clear();
+		}
+
 		ALIGNED_NEW_DELETE("Engine::SceneMap")
 	};
 }

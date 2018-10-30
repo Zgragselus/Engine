@@ -73,6 +73,28 @@ private:
 
 	bool mShowProfiler;
 
+	Engine::Entity* FromModel(const std::string& name, Engine::Model* mdl)
+	{
+		Engine::Entity* ent = new Engine::Entity(name);
+
+		for (size_t i = 0; i < mdl->GetMeshesCount(); i++)
+		{
+			Engine::Mesh* m = mdl->GetMesh(i);
+			Engine::Texture* diffuseMap = mdl->GetTexture(i, 0);
+			Engine::Texture* normalsMap = mdl->GetTexture(i, 1);
+			Engine::Texture* metallicMap = mdl->GetTexture(i, 2);
+			Engine::Texture* roughnessMap = mdl->GetTexture(i, 3);
+			Engine::Texture* heightMap = mdl->GetTexture(i, 4);
+
+			Engine::Entity* child = new Engine::Entity(mdl->GetMesh(i)->GetName(), ent);
+			child->GameObject().Add<Engine::MeshComponent>(m, mMeshManager);
+			child->GameObject().Add<Engine::MaterialComponent>(diffuseMap, normalsMap, metallicMap, roughnessMap, heightMap, mTextureManager);
+			child->Transformation().SetTranslation(mdl->GetTransformation(i));
+		}
+
+		return ent;
+	}
+
 public:
 	Main(Engine::Log* log, Engine::Constants* options) : Engine::System("Main")
 	{
@@ -174,9 +196,9 @@ public:
 
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		loader->SetManagers(mMeshManager, mModelManager, mTextureManager);
-		Engine::Entity* ent = loader->Load("../Data/Example05/Sponza/sponza.obj");
+		Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
 		//Engine::Entity* ent = loader->Load("../Data/Shared/Models/environment.obj");
-		Engine::Entity* ent2 = loader->Load("../Data/Shared/Models/sphere.obj");
+		Engine::Entity* ent2 = FromModel("sphere", loader->Load("../Data/Shared/Models/sphere.obj"));
 		//ent2->Transformation().SetTranslation(Engine::float4(310.0f, 210.0f, -180.0f, 1.0f));
 		ent2->Transformation().SetTranslation(Engine::float4(-1096.0f, 27.0f, 10.0f, 1.0f));
 		ent2->Transformation().Update();
@@ -186,7 +208,7 @@ public:
 		ent2->Children()[0]->GameObject().Add<Engine::RigidBodyComponent>(rb);
 		ent2->Update();
 
-		Engine::Entity* tmp = loader->Load("../Data/Shared/Models/cube.obj");
+		Engine::Entity* tmp = FromModel("cube", loader->Load("../Data/Shared/Models/cube.obj"));
 		Engine::Mesh* m = tmp->Children()[0]->GameObject().Get<Engine::MeshComponent>()->GetMesh();
 		Engine::MaterialComponent* mat = tmp->Children()[0]->GameObject().Get<Engine::MaterialComponent>();
 
@@ -521,7 +543,46 @@ public:
 			{
 				if (ImGui::BeginMenu("File"))
 				{
-					if (ImGui::MenuItem("Close")) {}
+					if (ImGui::MenuItem("New", "CTRL+N", nullptr))
+					{
+
+					}
+
+					if (ImGui::MenuItem("Open", "CTRL+O", nullptr))
+					{
+						std::string filename;
+						bool open = Engine::FileDialog::Show(mLog, "Open Scene", "Skye Cuillin Scene\0*.scene\0", Engine::FileDialog::Type::OPEN_FILE_DIALOG, filename);
+						if (open)
+						{
+							// TODO
+
+							std::ifstream f(filename);
+							std::string str((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+							Engine::Entity* loaded = new Engine::Entity("Root");
+							loaded->Deserialize(mScene, str);
+							mScene->LoadScene(loaded);
+
+							//LoadScene
+						}
+					}
+
+					if (ImGui::MenuItem("Save", "CTRL+S", nullptr))
+					{
+						std::string filename;
+						bool save = Engine::FileDialog::Show(mLog, "Save Scene", "Skye Cuillin Scene\0*.scene\0", Engine::FileDialog::Type::SAVE_FILE_DIALOG, filename);
+						if (save)
+						{
+							std::ofstream f(filename);
+							f << mScene->GetScenegraph()->Serialize();
+							f.close();
+						}
+					}
+					
+					if (ImGui::MenuItem("Exit"))
+					{
+
+					}
+
 					ImGui::EndMenu();
 				}
 
@@ -544,7 +605,6 @@ public:
 
 				if (ImGui::BeginMenu("View"))
 				{
-					ImGui::MenuItem("Show Profiler", "", &mShowProfiler);
 					ImGui::MenuItem("Show Profiler", "", &mShowProfiler);
 
 					ImGui::EndMenu();
@@ -906,6 +966,37 @@ public:
 			input->GetMouse()->GetPosition(mouseX, mouseY);
 			mEditor->MouseRelease(br.mButton, mouseX, mouseY);
 		}
+
+		ImGuiContext* ctx = ImGui::GetCurrentContext();
+		if (ctx->DragDropPayload.Data != nullptr && (std::string(ctx->DragDropPayload.DataType) == "RESOURCE_MODEL"))
+		{
+			Engine::Manager<Engine::Model>::Node* node = *((Engine::Manager<Engine::Model>::Node**)ctx->DragDropPayload.Data);
+
+			Engine::Entity* ent = new Engine::Entity("Temp");
+
+			for (size_t i = 0; i < node->Get()->GetMeshesCount(); i++)
+			{
+				Engine::Mesh* m = node->Get()->GetMesh(i);
+				Engine::Texture* diffuseMap = node->Get()->GetTexture(i, 0);
+				Engine::Texture* normalsMap = node->Get()->GetTexture(i, 1);
+				Engine::Texture* metallicMap = node->Get()->GetTexture(i, 2);
+				Engine::Texture* roughnessMap = node->Get()->GetTexture(i, 3);
+				Engine::Texture* heightMap = node->Get()->GetTexture(i, 4);
+
+				Engine::Entity* child = new Engine::Entity(node->Get()->GetMesh(i)->GetName(), ent);
+				child->GameObject().Add<Engine::MeshComponent>(m, mMeshManager);
+				child->GameObject().Add<Engine::MaterialComponent>(diffuseMap, normalsMap, metallicMap, roughnessMap, heightMap, mTextureManager);
+				child->Transformation().SetTranslation(node->Get()->GetTransformation(i));
+			}
+			
+			Engine::Command* cmd = new Engine::Command(Engine::Command::Create);
+			cmd->AddArg<std::string>(ent->Serialize());
+
+			mScene->Apply(cmd);
+
+			//mScene->AddEntity(ent, -1);
+		}
+		//printf("S %lx\n", ctx->DragDropPayload.Data);
 	}
 
 	void Handle(const Engine::Window::Resize& r)

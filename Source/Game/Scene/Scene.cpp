@@ -43,6 +43,8 @@ Scene::Scene(Manager<Mesh>* meshManager, Manager<Texture>* textureManager)
 	mState = new State();
 	mSelectionPosition = float4();
 
+	mToReload = nullptr;
+
 	ComponentFactory::Initialize(meshManager, textureManager);
 }
 
@@ -249,8 +251,10 @@ void Scene::Apply(Command* cmd, bool redone)
 		{
 			//printf("ENT %s\n", cmd->GetArg<std::string>(i)->c_str());
 
+			
+
 			entity = new Entity("_Temp");
-			entity->Deserialize(this, *cmd->GetArg<std::string>(0));
+			entity->Deserialize(this, *cmd->GetArg<std::string>(i));
 
 			int id = AddEntity(entity, mSearch.GetID(entity->GetParent()));
 
