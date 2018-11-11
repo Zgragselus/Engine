@@ -55,16 +55,23 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 	// Restore name
 	mName = lines[1];
 
-	// Restore parents
-	if (parent == nullptr)
+	if (scene->GetEntity(mName) == nullptr)
 	{
-		if (lines.size() > 2)
+		// Restore parents
+		if (parent == nullptr)
 		{
-			Entity* parsedParent = scene->GetEntity(lines[2]);
-
-			if (parsedParent != nullptr)
+			if (lines.size() > 2)
 			{
-				parsedParent->AddChild(this);
+				Entity* parsedParent = scene->GetEntity(lines[2]);
+
+				if (parsedParent != nullptr)
+				{
+					parsedParent->AddChild(this);
+				}
+				else
+				{
+					scene->GetScenegraph()->AddChild(this);
+				}
 			}
 			else
 			{
@@ -73,12 +80,8 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 		}
 		else
 		{
-			scene->GetScenegraph()->AddChild(this);
+			parent->AddChild(this);
 		}
-	}
-	else
-	{
-		parent->AddChild(this);
 	}
 
 	// Restore transforms
@@ -217,6 +220,10 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 					std::string entityString = String::Join(entityData, '\n');
 					e->Deserialize(scene, entityString, this);
 					entityData.clear();
+
+					unsigned int id = scene->GetIDGenerator()->Next();
+					e->mSceneID = id;
+					scene->GetSearchMap()->Add(id, e->GetName(), e);
 				}
 
 				// Offset line here by 1, in case name contained 'Entity' so we don't double-hit keyword
@@ -243,5 +250,9 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 		std::string entityString = String::Join(entityData, '\n');
 		e->Deserialize(scene, entityString, this);
 		entityData.clear();
+
+		unsigned int id = scene->GetIDGenerator()->Next();
+		e->mSceneID = id;
+		scene->GetSearchMap()->Add(id, e->GetName(), e);
 	}
 }

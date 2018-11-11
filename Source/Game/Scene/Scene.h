@@ -23,6 +23,7 @@
 
 #include <map>
 #include <stack>
+#include <fstream>
 #include "Core/Util/ID.h"
 #include "SceneMap.h"
 #include "../Entity/Entity.h"
@@ -83,8 +84,11 @@ namespace Engine
 		std::vector<int> mToRemove;
 
 		/// <summary>Replacement scene flag</summary>
-		/// If set to non-nullptr, the replacement scene has to contain new scene root with which we want to replace 
-		Entity* mToReload;
+		/// If set to true, the scene will be loaded from given file
+		bool mToReload;
+
+		/// <summary>File to load new scene from</summary>
+		std::string mToReloadFilename;
 
 		void RecalculateGizmoPosition()
 		{
@@ -104,9 +108,10 @@ namespace Engine
 			return mSimulationState;
 		}
 
-		inline void LoadScene(Entity* root)
+		inline void LoadScene(const std::string& filename)
 		{
-			mToReload = root;
+			mToReload = true;
+			mToReloadFilename = filename;
 		}
 
 		inline void ProcessChanges()
@@ -118,22 +123,39 @@ namespace Engine
 
 			mToRemove.clear();
 
-			if (mToReload != nullptr)
+			if (mToReload == true)
 			{
+				delete mSceneGraph;
+
 				mId.Clear();
 				mSearch.Clear();
 				mUndoRedo->Clear();
 				mState->Clear();
 				mSelectionPosition = float4();
 
-				delete mSceneGraph;
-				mSceneGraph = mToReload;
+				std::ifstream f(mToReloadFilename);
+				std::string str((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+				Engine::Entity* root = new Engine::Entity("Root");
+
+				mSceneGraph = root;
 				unsigned int id = mId.Next();
 				mSceneGraph->mSceneID = id;
 				mSearch.Add(id, "Root", mSceneGraph);
 
-				mToReload = nullptr;
+				root->Deserialize(this, str);
+
+				mToReload = false;
 			}
+		}
+
+		inline SceneMap<Entity>* GetSearchMap()
+		{
+			return &mSearch;
+		}
+
+		inline ID* GetIDGenerator()
+		{
+			return &mId;
 		}
 
 		/// <summary>

@@ -196,8 +196,8 @@ public:
 
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		loader->SetManagers(mMeshManager, mModelManager, mTextureManager);
-		Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
-		//Engine::Entity* ent = loader->Load("../Data/Shared/Models/environment.obj");
+		//Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
+		Engine::Entity* ent = FromModel("env", loader->Load("../Data/Shared/Models/environment.obj"));
 		Engine::Entity* ent2 = FromModel("sphere", loader->Load("../Data/Shared/Models/sphere.obj"));
 		//ent2->Transformation().SetTranslation(Engine::float4(310.0f, 210.0f, -180.0f, 1.0f));
 		ent2->Transformation().SetTranslation(Engine::float4(-1096.0f, 27.0f, 10.0f, 1.0f));
@@ -305,9 +305,7 @@ public:
 		cam->Process(1.0f / 60.0f);
 		ent->GameObject().Add<Engine::CameraComponent>(cam);
 		mScene->AddEntity(ent, -1);
-
-		mEditor->SetCamera(mScene->GetEntity("Camera"));
-			
+					
 		mGfxProfiler = new SkyeCuillin::GraphicsProfiler(mRenderer, mLog, 64);
 		mGfxProfiler->AddChannel("LightingSystem");
 		mGfxProfiler->AddChannel("Picking");
@@ -378,6 +376,7 @@ public:
 		int h;
 		this->mWindow->GetSize(&w, &h);
 
+		mEditor->SetCamera(mScene->GetEntity("Camera"));
 		refresh = mEditor->mChange;
 		mEditor->mChange = false;		
 
@@ -556,11 +555,7 @@ public:
 						{
 							// TODO
 
-							std::ifstream f(filename);
-							std::string str((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
-							Engine::Entity* loaded = new Engine::Entity("Root");
-							loaded->Deserialize(mScene, str);
-							mScene->LoadScene(loaded);
+							mScene->LoadScene(filename);
 
 							//LoadScene
 						}
