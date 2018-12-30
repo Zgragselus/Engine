@@ -1,7 +1,6 @@
 #ifndef __DIRECTORY_TREE__H__
 #define __DIRECTORY_TREE__H__
 
-#include "Main.h"
 #include "Graphics/Graphics.h"
 #include "Game/Game.h"
 #include "ImguiSubsystem.h"

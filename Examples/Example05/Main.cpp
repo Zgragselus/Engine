@@ -176,16 +176,16 @@ public:
 
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		//Engine::Entity* ent = loader->Load("../Data/Example05/sibenik/sibenik.obj");
-		Engine::Entity* ent = loader->Load("../Data/Example05/Sponza/sponza.obj");
+		//Engine::Entity* ent = loader->Load("../Data/Example05/Sponza/sponza.obj");
 		//Engine::Entity* ent = loader->Load("../Data/Example05/sanMiguel/sanMiguel.obj");
-		mScene->AddEntity(ent, -1);
+		//mScene->AddEntity(ent, -1);
 
 		mFullscreenQuad = new Engine::Mesh(mRenderer, triangleVertices, sizeof(float) * 5, 6, triangleIndices, 6);
 		/*ent = new Engine::Entity();
 		ent->GameObject().Add<Engine::MeshComponent>(mesh);
 		mScene->AddEntity(ent, -1, "Triangle");*/
 
-		ent = new Engine::Entity("Camera");
+		Engine::Entity* ent = new Engine::Entity("Camera");
 		Engine::Camera* cam = new Engine::PerspectiveCamera(Engine::float4(0.0f, 100.0f, 100.0f, 1.0f),
 			Engine::float4(0.0f, 100.0f, 0.0f, 1.0f),
 			Engine::float4(0.0f, 1.0f, 0.0f, 0.0f),

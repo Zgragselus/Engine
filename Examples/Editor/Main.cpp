@@ -49,7 +49,7 @@ private:
 	Engine::Manager<Engine::Model>* mModelManager;
 
 	Engine::Scene* mScene;
-	
+
 	bool mCamForward = false;
 	bool mCamBackward = false;
 	bool mCamLeft = false;
@@ -82,9 +82,9 @@ private:
 			Engine::Mesh* m = mdl->GetMesh(i);
 			Engine::Texture* diffuseMap = mdl->GetTexture(i, 0);
 			Engine::Texture* normalsMap = mdl->GetTexture(i, 1);
-			Engine::Texture* metallicMap = mdl->GetTexture(i, 2);
+			Engine::Texture* heightMap = mdl->GetTexture(i, 2);
 			Engine::Texture* roughnessMap = mdl->GetTexture(i, 3);
-			Engine::Texture* heightMap = mdl->GetTexture(i, 4);
+			Engine::Texture* metallicMap = mdl->GetTexture(i, 4);
 
 			Engine::Entity* child = new Engine::Entity(mdl->GetMesh(i)->GetName(), ent);
 			child->GameObject().Add<Engine::MeshComponent>(m, mMeshManager);
@@ -178,17 +178,17 @@ public:
 		mLightingSystem = new SkyeCuillin::LightingSystem(mRenderer, mOptions->Get<int>("Renderer.Lighting.MaxLights"), mOptions->Get<int>("Renderer.Lighting.VirtualShadowMapResolution"));
 		mVoxelize = new SkyeCuillin::Voxelize(mRenderer, mLightingSystem, mOptions->Get<int>("Renderer.GlobalIllumination.VoxelResolution"), SkyeCuillin::Voxelize::MipmapCalculation::MIPMAP_3);
 		mDeferredRenderer = new SkyeCuillin::RenderPassGBuffer(mRenderer, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAA"));
-		mDeferredPass = new SkyeCuillin::RenderPassDeferredShading(mRenderer, mLightingSystem, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAA"), mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAAGI"));
+		mDeferredPass = new SkyeCuillin::RenderPassDeferredShading(mLog, mRenderer, mLightingSystem, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAA"), mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAAGI"));
 		mAOPass = new SkyeCuillin::RenderPassConeTracingAO(mRenderer, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAAGI"));
 		mReflectionPass = new SkyeCuillin::RenderPassConeTracingReflection(mRenderer, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAAGI"));
 		mGIPass = new SkyeCuillin::RenderPassConeTracingGI(mRenderer, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAAGI"));
 		mPicking = new SkyeCuillin::RenderPassPicking(mRenderer, w, h, mGizmo);
 		mResolve = new SkyeCuillin::RenderPassResolve(mLog, mRenderer, w, h, mOptions->Get<int>("Renderer.Antialiasing.SamplesMSAA"));
-		
+
 		mEditor->Resize(w, h);
 		mEditor->SetScene(mScene);
 		mEditor->SetPickingPass(mPicking);
-		
+
 		mMatrices = new Engine::mat4[mOptions->Get<int>("Scene.MaxObjects")];
 		mMatricesBuffer = new Engine::GpuMappedBuffer();
 		mMatricesBuffer->Init(mRenderer, mOptions->Get<int>("Scene.MaxObjects"), sizeof(float) * 16);
@@ -196,8 +196,8 @@ public:
 
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		loader->SetManagers(mMeshManager, mModelManager, mTextureManager);
-		//Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
-		Engine::Entity* ent = FromModel("env", loader->Load("../Data/Shared/Models/environment.obj"));
+		Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
+		//Engine::Entity* entX = FromModel("env", loader->Load("../Data/Shared/Models/environment.obj"));
 		Engine::Entity* ent2 = FromModel("sphere", loader->Load("../Data/Shared/Models/sphere.obj"));
 		//ent2->Transformation().SetTranslation(Engine::float4(310.0f, 210.0f, -180.0f, 1.0f));
 		ent2->Transformation().SetTranslation(Engine::float4(-1096.0f, 27.0f, 10.0f, 1.0f));
@@ -208,13 +208,13 @@ public:
 		ent2->Children()[0]->GameObject().Add<Engine::RigidBodyComponent>(rb);
 		ent2->Update();
 
-		Engine::Entity* tmp = FromModel("cube", loader->Load("../Data/Shared/Models/cube.obj"));
+		/*Engine::Entity* tmp = FromModel("cube", loader->Load("../Data/Shared/Models/cube.obj"));
 		Engine::Mesh* m = tmp->Children()[0]->GameObject().Get<Engine::MeshComponent>()->GetMesh();
 		Engine::MaterialComponent* mat = tmp->Children()[0]->GameObject().Get<Engine::MaterialComponent>();
 
-		/*for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 100; i++)
 		{
-			Engine::Entity* cube = new Engine::Entity();
+			Engine::Entity* cube = new Engine::Entity("Cube" + std::to_string(i));
 			cube->Transformation().SetTranslation(Engine::float4((float)(rand() % 600 - 300), (float)(rand() % 300 - 150) + 500, (float)(rand() % 300 - 150), 1.0f));
 			cube->Transformation().Update();
 			cube->GameObject().Add<Engine::MeshComponent>(m, mMeshManager);
@@ -223,14 +223,14 @@ public:
 			cube->GameObject().Add<Engine::CollisionComponent>(shp2);
 			Engine::RigidBody* rb2 = new Engine::RigidBody(2.0f);
 			cube->GameObject().Add<Engine::RigidBodyComponent>(rb2);
-			mScene->AddEntity(cube, -1, "Cube" + std::to_string(i));
+			mScene->AddEntity(cube, -1);
 		}*/
 
 		delete loader;
 
 		mScene->AddEntity(ent, -1);
 		mScene->AddEntity(ent2, -1);
-		mScene->AddEntity(tmp, -1);
+		//mScene->AddEntity(tmp, -1);
 
 		/*ent = new Engine::Entity("Light1");
 		ent->Transformation().SetTranslation(Engine::float4(-440.0f, 380.0f, 60.0f, 1.0f));
@@ -278,8 +278,8 @@ public:
 			ent = new Engine::Entity("SpotLight" + std::to_string(i));
 			ent->Transformation().SetTranslation(Engine::float4((float)(rand() % 900 - 450), (float)(rand() % 100 + 50), (float)(rand() % 160 - 80), 1.0f));
 			ent->Transformation().Update();
-			Engine::SpotLight* spotlight = new Engine::SpotLight(Engine::float4(1.0f, 1.0f, 1.0f, 1.0f), 
-				Engine::normalize(Engine::float4(rand() % 100 - 50, rand() % 100 - 50, rand() % 100 - 50, 0.0f)), 
+			Engine::SpotLight* spotlight = new Engine::SpotLight(Engine::float4(1.0f, 1.0f, 1.0f, 1.0f),
+				Engine::normalize(Engine::float4(rand() % 100 - 50, rand() % 100 - 50, rand() % 100 - 50, 0.0f)),
 				Engine::Math::PI / 4.0f, 0.0f, 0.0f);
 			ent->GameObject().Add<Engine::LightComponent>(spotlight);
 			mScene->AddEntity(ent, -1);
@@ -305,7 +305,7 @@ public:
 		cam->Process(1.0f / 60.0f);
 		ent->GameObject().Add<Engine::CameraComponent>(cam);
 		mScene->AddEntity(ent, -1);
-					
+
 		mGfxProfiler = new SkyeCuillin::GraphicsProfiler(mRenderer, mLog, 64);
 		mGfxProfiler->AddChannel("LightingSystem");
 		mGfxProfiler->AddChannel("Picking");
@@ -318,7 +318,7 @@ public:
 		mGfxProfiler->AddChannel("Resolve");
 		mGfxProfiler->AddChannel("Gizmo");
 		mGfxProfiler->AddChannel("UI");
-				
+
 		/*Engine::ComputeContext* computeCtx = mRenderer->GetComputeContext();
 		computeCtx->Begin();
 		mVoxelize->Clear(mRenderer->Heap(), computeCtx);
@@ -356,13 +356,13 @@ public:
 
 		delete[] mMatrices;
 		delete mMatricesBuffer;
-		
+
 		mWindow->Destroy();
 	}
 
 	float time = 0.0f;
 	bool refresh = true;
-	
+
 	virtual void Update()
 	{
 		if (mDeltaTime >= 0.25)
@@ -378,9 +378,10 @@ public:
 
 		mEditor->SetCamera(mScene->GetEntity("Camera"));
 		refresh = mEditor->mChange;
-		mEditor->mChange = false;		
+		mEditor->mChange = false;
 
 		Engine::Camera* cam = mScene->GetEntity("Camera")->GameObject().Get<Engine::CameraComponent>()->Get();
+		printf("%f %f %f\n", cam->GetForward().x, cam->GetForward().y, cam->GetForward().z);
 		if (cam->GetType() == Engine::Camera::Type::PERSPECTIVE)
 		{
 			((Engine::PerspectiveCamera*)cam)->SetAspectRatio((float)h / (float)w);
@@ -435,11 +436,11 @@ public:
 
 		Engine::AABB bounds = bvh.GetBounds();
 
-		float maxSize = max(max(bounds.mMax.x - bounds.mMin.x, bounds.mMax.y - bounds.mMin.y), bounds.mMax.y - bounds.mMin.y);
-		float maxOffset = max(max(-bounds.mMin.x, -bounds.mMin.y), -bounds.mMin.z);
+		float maxSize = std::max(std::max(bounds.mMax.x - bounds.mMin.x, bounds.mMax.y - bounds.mMin.y), bounds.mMax.y - bounds.mMin.y);
+		float maxOffset = std::max(std::max(-bounds.mMin.x, -bounds.mMin.y), -bounds.mMin.z);
 		float aabb[2];
-		aabb[0] = min(min(bounds.mMin.x, bounds.mMin.y), bounds.mMin.z);
-		aabb[1] = max(max(bounds.mMax.x, bounds.mMax.y), bounds.mMax.z);
+		aabb[0] = std::min(std::min(bounds.mMin.x, bounds.mMin.y), bounds.mMin.z);
+		aabb[1] = std::max(std::max(bounds.mMax.x, bounds.mMax.y), bounds.mMax.z);
 
 		time += 0.01f;
 
@@ -447,7 +448,7 @@ public:
 		computeCtx->Begin();
 		mVoxelize->GenerateMipmaps(mRenderer->Heap(), computeCtx);
 		computeCtx->Finish();*/
-				
+
 		Engine::GraphicsContext* context = mRenderer->GetGraphicsContext();
 
 		context->Begin();
@@ -526,7 +527,7 @@ public:
 			mGizmo->AddRotationAxis(mScene->GetGizmoPosition(), mEditor->mAxis, mEditor->mAxisScale, mEditor->mActiveAxis);
 		}
 		mGizmo->ProcessIcons(nodes);
-		
+
 		mGizmo->Render(mScene->GetEntity("Camera"), mRenderer->Heap(), context);
 		mGfxProfiler->EndProfile(context, "Gizmo");
 
@@ -550,7 +551,7 @@ public:
 					if (ImGui::MenuItem("Open", "CTRL+O", nullptr))
 					{
 						std::string filename;
-						bool open = Engine::FileDialog::Show(mLog, "Open Scene", "Skye Cuillin Scene\0*.scene\0", Engine::FileDialog::Type::OPEN_FILE_DIALOG, filename);
+						bool open = Engine::FileDialog::Show(mLog, "Open Scene", "Skye Cuillin Scene\0*.scene\0All Files\0*.*\0", Engine::FileDialog::Type::OPEN_FILE_DIALOG, filename);
 						if (open)
 						{
 							// TODO
@@ -564,15 +565,13 @@ public:
 					if (ImGui::MenuItem("Save", "CTRL+S", nullptr))
 					{
 						std::string filename;
-						bool save = Engine::FileDialog::Show(mLog, "Save Scene", "Skye Cuillin Scene\0*.scene\0", Engine::FileDialog::Type::SAVE_FILE_DIALOG, filename);
+						bool save = Engine::FileDialog::Show(mLog, "Save Scene", "Skye Cuillin Scene\0*.scene\0All Files\0*.*\0", Engine::FileDialog::Type::SAVE_FILE_DIALOG, filename);
 						if (save)
 						{
-							std::ofstream f(filename);
-							f << mScene->GetScenegraph()->Serialize();
-							f.close();
+							mScene->SaveScene(filename);
 						}
 					}
-					
+
 					if (ImGui::MenuItem("Exit"))
 					{
 
@@ -583,15 +582,15 @@ public:
 
 				if (ImGui::BeginMenu("Edit"))
 				{
-					if (ImGui::MenuItem("Undo", "CTRL+Z", nullptr, mScene->CanUndo())) 
-					{ 
-						mScene->PerformUndo(); 
+					if (ImGui::MenuItem("Undo", "CTRL+Z", nullptr, mScene->CanUndo()))
+					{
+						mScene->PerformUndo();
 						mEditor->mChange = true;
 					}
 
-					if (ImGui::MenuItem("Redo", "CTRL+Y", nullptr, mScene->CanRedo())) 
-					{ 
- 						mScene->PerformRedo();
+					if (ImGui::MenuItem("Redo", "CTRL+Y", nullptr, mScene->CanRedo()))
+					{
+						mScene->PerformRedo();
 						mEditor->mChange = true;
 					}
 
@@ -618,12 +617,12 @@ public:
 					if (ImGui::MenuItem("Delete Game Object", "", &deleteGameObject))
 					{
 						Engine::Command* cmd = new Engine::Command(Engine::Command::Delete);
-						
+
 						for (int id : mScene->GetState()->GetSelection())
 						{
 							cmd->AddArg<std::string>(mScene->GetEntity(id)->Serialize());
 						}
-						
+
 						mScene->Apply(cmd);
 
 						mScene->GetState()->GetSelection().clear();
@@ -631,7 +630,7 @@ public:
 
 					ImGui::EndMenu();
 				}
-				
+
 				ImGui::EndMenuBar();
 			}
 
@@ -717,6 +716,28 @@ public:
 		}
 		ImGui::End();
 
+		if (ImGui::Begin("Manager"))
+		{
+			ImGui::BeginChild("Records", ImVec2(0, -32), false);
+			if (ImGui::TreeNodeEx("Model Manager:", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				std::vector<std::string> records;
+				mModelManager->FilterKeys("", records);
+
+				for (const std::string& r : records)
+				{
+					if (ImGui::TreeNodeEx(r.c_str(), ImGuiTreeNodeFlags_Leaf))
+					{
+						ImGui::TreePop();
+					}
+				}
+
+				ImGui::TreePop();
+			}
+			ImGui::EndChild();
+		}
+		ImGui::End();
+
 		if (Engine::ComponentStatic::mEditedComponent != nullptr)
 		{
 			mEditor->ImguiManagerList<Engine::Texture>("Select Texture", mTextureManager);
@@ -794,7 +815,7 @@ public:
 
 		switch (kp.mKey)
 		{
-		case Engine::Keyboard::KEY_CONTROL_L: 
+		case Engine::Keyboard::KEY_CONTROL_L:
 			io.KeyCtrl = true;
 			break;
 
@@ -983,7 +1004,7 @@ public:
 				child->GameObject().Add<Engine::MaterialComponent>(diffuseMap, normalsMap, metallicMap, roughnessMap, heightMap, mTextureManager);
 				child->Transformation().SetTranslation(node->Get()->GetTransformation(i));
 			}
-			
+
 			Engine::Command* cmd = new Engine::Command(Engine::Command::Create);
 			cmd->AddArg<std::string>(ent->Serialize());
 
@@ -1020,7 +1041,7 @@ int main()
 
 	Main* m = new Main(log, options);
 	SkyeCuillin::DirectoryWatch* dw = new SkyeCuillin::DirectoryWatch(log, options);
-	
+
 	Engine::Core::Instance()->Add(input);
 	Engine::Core::Instance()->Add(m);
 	Engine::Core::Instance()->Add(dw);

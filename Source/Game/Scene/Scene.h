@@ -114,6 +114,13 @@ namespace Engine
 			mToReloadFilename = filename;
 		}
 
+		inline void SaveScene(const std::string& filename)
+		{
+			std::ofstream f(filename);
+			f << GetScenegraph()->Serialize();
+			f.close();
+		}
+
 		inline void ProcessChanges()
 		{
 			for (int id : mToRemove)

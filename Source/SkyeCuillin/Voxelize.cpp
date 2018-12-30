@@ -36,11 +36,12 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 
 	mVoxelize = new Engine::D3DShader("../Data/SkyeCuillin/Voxelize.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
 			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
 			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});	// Flags??? D3DCOMPILE_ALL_RESOURCES_BOUND | D3DCOMPILE_ENABLE_STRICTNESS)
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());	// Flags??? D3DCOMPILE_ALL_RESOURCES_BOUND | D3DCOMPILE_ENABLE_STRICTNESS)
 
 	Engine::InputLayout inputLayout = Engine::InputLayout();
 	inputLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGB32F, 0, 0, Engine::InputLayout::Classification::PER_VERTEX, 0));
@@ -76,9 +77,10 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 
 	mClear = new Engine::D3DShader("../Data/SkyeCuillin/VoxelClear.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "CS")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "CS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	mClearPS = new Engine::PipelineState(renderer->GetDevice(),
 		mClearRS,
@@ -108,9 +110,10 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 
 		mMipmap = new Engine::D3DShader("../Data/SkyeCuillin/VoxelMipmap.hlsl",
 			std::vector<Engine::D3DShader::ShaderEntryPoint>
-		{
-			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
-		});
+			{
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
+			},
+			std::vector<Engine::D3DShader::ShaderDefine>());
 		break;
 
 	case MipmapCalculation::MIPMAP_2:
@@ -136,9 +139,10 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 
 		mMipmap = new Engine::D3DShader("../Data/SkyeCuillin/VoxelMipmap2.hlsl",
 			std::vector<Engine::D3DShader::ShaderEntryPoint>
-		{
-			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
-		});
+			{
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
+			},
+			std::vector<Engine::D3DShader::ShaderDefine>());
 		break;
 
 	case MipmapCalculation::MIPMAP_3:
@@ -166,9 +170,10 @@ Voxelize::Voxelize(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem
 
 		mMipmap = new Engine::D3DShader("../Data/SkyeCuillin/VoxelMipmap3.hlsl",
 			std::vector<Engine::D3DShader::ShaderEntryPoint>
-		{
-			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
-		});
+			{
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
+			},
+			std::vector<Engine::D3DShader::ShaderDefine>());
 		break;
 	}
 
@@ -430,11 +435,12 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 
 	mVoxelize = new Engine::D3DShader("../Data/SkyeCuillin/VoxelizeOctree.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	Engine::InputLayout inputLayout = Engine::InputLayout();
 	inputLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGB32F, 0, 0, Engine::InputLayout::Classification::PER_VERTEX, 0));
@@ -470,9 +476,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeNodeFlagRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeNodeFlag = new Engine::D3DShader("../Data/SkyeCuillin/OctreeNodeFlag.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeFlag")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeFlag")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeNodeFlagPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeNodeFlagRS, mOctreeNodeFlag);
 
 	mOctreeNodeAllocRS = new Engine::RootSignature(renderer->GetDevice(), 3, 0);
@@ -484,9 +491,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeNodeAllocRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeNodeAlloc = new Engine::D3DShader("../Data/SkyeCuillin/OctreeNodeAlloc.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeAlloc")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeAlloc")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeNodeAllocPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeNodeAllocRS, mOctreeNodeAlloc);
 
 	mOctreeNodeInitRS = new Engine::RootSignature(renderer->GetDevice(), 2, 0);
@@ -496,9 +504,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeNodeInitRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeNodeInit = new Engine::D3DShader("../Data/SkyeCuillin/OctreeNodeInit.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeInit")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeNodeInit")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeNodeInitPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeNodeInitRS, mOctreeNodeInit);
 
 	mOctreeDataFillRS = new Engine::RootSignature(renderer->GetDevice(), 5, 0);
@@ -514,9 +523,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeDataFillRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeDataFill = new Engine::D3DShader("../Data/SkyeCuillin/OctreeDataFill.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataFill")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataFill")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeDataFillPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeDataFillRS, mOctreeDataFill);
 
 	mOctreeDataClearRS = new Engine::RootSignature(renderer->GetDevice(), 2, 0);
@@ -526,9 +536,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeDataClearRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeDataClear = new Engine::D3DShader("../Data/SkyeCuillin/OctreeDataClear.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataClear")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataClear")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeDataClearPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeDataClearRS, mOctreeDataClear);
 
 	mOctreeDataFilterRS = new Engine::RootSignature(renderer->GetDevice(), 4, 0);
@@ -542,9 +553,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeDataFilterRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeDataFilter = new Engine::D3DShader("../Data/SkyeCuillin/OctreeDataFilter.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataFilter")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataFilter")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeDataFilterPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeDataFilterRS, mOctreeDataFilter);
 	
 	mOctreeDataInteriorRS = new Engine::RootSignature(renderer->GetDevice(), 4, 0);
@@ -558,9 +570,10 @@ VoxelizeOctree::VoxelizeOctree(Engine::D3DRenderer* renderer, unsigned int resol
 	mOctreeDataInteriorRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	mOctreeDataInterior = new Engine::D3DShader("../Data/SkyeCuillin/OctreeDataInterior.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataInterior")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "OctreeDataInterior")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 	mOctreeDataInteriorPS = new Engine::PipelineState(renderer->GetDevice(), mOctreeDataInteriorRS, mOctreeDataInterior);
 
 	mDimensions = resolution;

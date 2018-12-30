@@ -13,10 +13,11 @@ RenderGizmo::RenderGizmo(Engine::Log* log, Engine::D3DRenderer* renderer, unsign
 
 	mGizmo = new Engine::D3DShader("../Data/SkyeCuillin/Gizmo.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	Engine::InputLayout guiLayout = Engine::InputLayout();
 	guiLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGBA32F, 0, 0, Engine::InputLayout::Classification::PER_VERTEX, 0));
@@ -79,11 +80,12 @@ RenderGizmo::RenderGizmo(Engine::Log* log, Engine::D3DRenderer* renderer, unsign
 
 	mGizmoIcons = new Engine::D3DShader("../Data/SkyeCuillin/GizmoIcons.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS_RenderImage")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS_RenderImage")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	mGizmoIconsPS = new Engine::PipelineState(renderer->GetDevice(),
 		mGizmoIconsRS,
@@ -102,11 +104,12 @@ RenderGizmo::RenderGizmo(Engine::Log* log, Engine::D3DRenderer* renderer, unsign
 	
 	mGizmoPicking = new Engine::D3DShader("../Data/SkyeCuillin/GizmoIcons.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS_RenderID")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::GEOMETRY_SHADER, "GS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS_RenderID")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	mGizmoPickingPS = new Engine::PipelineState(renderer->GetDevice(),
 		mGizmoIconsRS,

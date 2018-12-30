@@ -52,7 +52,7 @@ namespace Engine
 		std::map<ShaderType, ID3DBlob*> mShaders;
 
 	public:
-		D3DShader(const std::string& filename, std::vector<ShaderEntryPoint>& params, std::vector<ShaderDefine>& defines = std::vector<ShaderDefine>(), unsigned int compilerFlags = 0);
+		D3DShader(const std::string& filename, const std::vector<ShaderEntryPoint>& params, const std::vector<ShaderDefine>& defines, unsigned int compilerFlags = 0);
 
 		~D3DShader();
 

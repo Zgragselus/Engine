@@ -161,7 +161,7 @@ namespace Engine
 			Classification mClassification;
 			unsigned int mInstanceStepRate;
 
-			Attribute(char* semanticName, 
+			Attribute(const char* semanticName, 
 				unsigned int semanticIndex,
 				Graphics::Format format,
 				unsigned int slot,
@@ -182,7 +182,7 @@ namespace Engine
 		std::vector<Attribute> mAttributes;
 		std::vector<D3D12_INPUT_ELEMENT_DESC> mElements;
 		
-		void AddAttribute(Attribute& attr)
+		void AddAttribute(const Attribute& attr)
 		{
 			mAttributes.push_back(attr);
 		}

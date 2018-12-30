@@ -244,6 +244,7 @@ void Entity::Deserialize(Scene* scene, const std::string& s, Entity* parent)
 		lineID++;
 	}
 
+	// If there is one more, instantiate it
 	if (instEntity == 1)
 	{
 		Entity* e = new Entity("_TempChild");

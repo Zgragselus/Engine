@@ -238,6 +238,8 @@ namespace Engine
 				mSpeed >> type;
 			mType = (Type)type;
 
+			mForward = normalize(mTarget - mPosition);
+
 			mValid = false;
 		}
 

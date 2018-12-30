@@ -34,9 +34,10 @@ RenderPassShadowMap::RenderPassShadowMap(Engine::D3DRenderer* renderer, unsigned
 
 	mMipmap = new Engine::D3DShader("../Data/SkyeCuillin/Mipmap.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	mMipmapPS = new Engine::PipelineState(renderer->GetDevice(),
 		mMipmapRS,
@@ -62,10 +63,11 @@ RenderPassShadowMap::RenderPassShadowMap(Engine::D3DRenderer* renderer, unsigned
 
 	mDepth = new Engine::D3DShader("../Data/SkyeCuillin/ShadowMap.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	Engine::InputLayout inputLayout = Engine::InputLayout();
 	inputLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGB32F, 0, 0, Engine::InputLayout::Classification::PER_VERTEX, 0));
