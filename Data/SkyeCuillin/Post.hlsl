@@ -234,8 +234,8 @@ Output PS(Input input)
 		//float3 color = ToneMap(diffuse.Load(coord, i).xyz, luminance, 0, exposure);
 		float3 color = ToneMap(diffuse.Load(coord, i).xyz, avgLuminance, 1.0, exposure);
 		float3 bloom = bloomResult.Sample(diffuseSampler, input.texCoord).xyz;
-		//color = color + bloom * BloomMagnitude;
-		color = diffuse.Load(coord, i).xyz;
+		 color = color + bloom * BloomMagnitude;
+		//color = diffuse.Load(coord, i).xyz;
 
 		color.x = pow(max(color.x, 0.0f), 1.0f / 2.2f);
 		color.y = pow(max(color.y, 0.0f), 1.0f / 2.2f);

@@ -44,7 +44,7 @@ namespace Engine
 		/// <param name="type">Dialog type (Open, Save, ...)</param>
 		/// <param name="filename">Resulting filename</param>
 		/// <return>True if file selected, false otherwise</return>
-		static bool Show(Log* log, const std::string& title, const std::string& filter, Type type, std::string& filename);
+		static bool Show(Log* log, const std::string& title, const char* filter, Type type, std::string& filename);
 	};
 }
 

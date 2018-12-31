@@ -428,7 +428,7 @@ bool MaterialComponent::Editor(std::string& prev, std::string& next)
 	bool dragdropChange = false;
 
 	prev = Serialize().c_str();
-	
+
 	ImGui::Text("Diffuse Map");
 	//if (ImGui::Button(ComponentStatic::mEditedDiffuse.c_str()))
 	ImGui::ImageButton((ImTextureID)(mDiffuseMap->mItem->GetSRV().mGpuHandle.ptr), ImVec2(64, 64));

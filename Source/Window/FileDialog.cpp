@@ -26,13 +26,13 @@ using namespace Engine;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Definition section
 
-bool FileDialog::Show(Log* log, const std::string& title, const std::string& filter, Type type, std::string& filename)
+bool FileDialog::Show(Log* log, const std::string& title, const char* filter, Type type, std::string& filename)
 {
 	char result[MAX_PATH] = { 0 };
 	OPENFILENAME ofn = { 0 };
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = filter.c_str();
+	ofn.lpstrFilter = filter;
 	ofn.lpstrFile = result;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = title.c_str();

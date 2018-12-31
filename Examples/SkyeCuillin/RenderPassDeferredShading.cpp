@@ -2,14 +2,14 @@
 
 using namespace SkyeCuillin;
 
-RenderPassDeferredShading::RenderPassDeferredShading(Engine::D3DRenderer* renderer, LightingSystem* lightingSystem, unsigned int width, unsigned int height, unsigned int samples, unsigned int samplesGI) :
+RenderPassDeferredShading::RenderPassDeferredShading(Engine::Log* log, Engine::D3DRenderer* renderer, LightingSystem* lightingSystem, unsigned int width, unsigned int height, unsigned int samples, unsigned int samplesGI) :
 	RenderPassFullscreen(renderer, width, height)
 {
 	mLightingSystem = lightingSystem;
 
 	mSamples = samples;
 
-	mDeferredRS = new Engine::RootSignature(renderer->GetDevice(), 11, 1);
+	mDeferredRS = new Engine::RootSignature(renderer->GetDevice(), 12, 2);
 	(*mDeferredRS)[0].InitAsConstantBuffer(0);
 	(*mDeferredRS)[1].InitAsDescriptorTable(1);
 	(*mDeferredRS)[1].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0, 1);
@@ -30,7 +30,19 @@ RenderPassDeferredShading::RenderPassDeferredShading(Engine::D3DRenderer* render
 	(*mDeferredRS)[9].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 7, 1);
 	(*mDeferredRS)[10].InitAsDescriptorTable(1);
 	(*mDeferredRS)[10].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 8, 1);
+	(*mDeferredRS)[11].InitAsDescriptorTable(1);
+	(*mDeferredRS)[11].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 9, 1);
 	mDeferredRS->InitStaticSampler(0, Engine::Sampler::CreateSamplerD3D(Engine::Sampler::Filter::MIN_POINT_MAG_POINT_MIP_POINT,
+		Engine::Sampler::Address::WRAP,
+		Engine::Sampler::Address::WRAP,
+		Engine::Sampler::Address::WRAP,
+		0.0f,
+		16,
+		Engine::Sampler::ComparisonFunc::NEVER,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		0.0f,
+		32.0f));
+	mDeferredRS->InitStaticSampler(1, Engine::Sampler::CreateSamplerD3D(Engine::Sampler::Filter::MIN_LINEAR_MAG_LINEAR_MIP_LINEAR,
 		Engine::Sampler::Address::WRAP,
 		Engine::Sampler::Address::WRAP,
 		Engine::Sampler::Address::WRAP,
@@ -85,10 +97,26 @@ RenderPassDeferredShading::RenderPassDeferredShading(Engine::D3DRenderer* render
 	mConstBuffer = new Engine::GpuMappedBuffer();
 	mConstBuffer->Init(mRenderer, 64, sizeof(float));
 	mConstBufferPtr = mConstBuffer->Map();
+
+	Engine::LoaderDevIL loader(log);
+	Engine::LoaderDevIL::Image* image = loader.Load("../Data/SkyeCuillin/brdf_lookup.png");
+	if (image != nullptr)
+	{
+		loader.GenerateMipmaps(image);
+		mBRDFLookup = new Engine::Texture();
+		mBRDFLookup->InitMipmaps(mRenderer, image->mWidth, image->mHeight, 1, image->mMipLevels, Engine::Graphics::RGBA8, (const void**)image->mMipmaps);
+		mBRDFLookup->SetName("BRDFLookup");
+	}
+	else
+	{
+		log->Print("SkyeCuillin::RenderPassResolve", std::string("Error: Requested texture image '../Data/SkyeCuillin/brdf_lookup.png' does not exists!"));
+	}
 }
 
 RenderPassDeferredShading::~RenderPassDeferredShading()
 {
+	delete mBRDFLookup;
+
 	delete mDeferredRS;
 	delete mDeferredPS;
 	delete mDeferred;
@@ -136,6 +164,7 @@ void RenderPassDeferredShading::Process(Engine::Entity* camera, Engine::Descript
 		context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(8, mSourceGI->GetSRV().mGpuHandle);
 		context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(9, mLightingSystem->GetLightBuffer()->GetSRV().mGpuHandle);
 		context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(10, mLightingSystem->GetShadowAtlasBuffer()->GetSRV().mGpuHandle);
+		context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(11, mBRDFLookup->GetSRV().mGpuHandle);
 		context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(4, mLightingSystem->GetShadowMap()->GetSRV().mGpuHandle);
 		
 		context->SetConstants(5, Engine::DWParam(-1));
