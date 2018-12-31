@@ -12,7 +12,7 @@ std::string D3DShader::ShaderTypeTarget[] =
 	"vs_5_1"
 };
 
-D3DShader::D3DShader(const std::string& filename, std::vector<ShaderEntryPoint>& params, std::vector<ShaderDefine>& defines, unsigned int compilerFlags)
+D3DShader::D3DShader(const std::string& filename, const std::vector<ShaderEntryPoint>& params, const std::vector<ShaderDefine>& defines, unsigned int compilerFlags)
 {
 	std::wstring wFilename = std::wstring(filename.begin(), filename.end());
 

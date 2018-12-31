@@ -59,10 +59,11 @@ ImguiSubsystem::ImguiSubsystem(Engine::D3DRenderer* renderer, int width, int hei
 
 	mGuiShader = new Engine::D3DShader("../Data/SkyeCuillin/Gui.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
 			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	Engine::InputLayout guiLayout = Engine::InputLayout();
 	guiLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGBA32F, 0, (size_t)(&((ImDrawVert*)0)->pos), Engine::InputLayout::Classification::PER_VERTEX, 0));

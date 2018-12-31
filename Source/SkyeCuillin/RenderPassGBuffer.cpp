@@ -34,12 +34,13 @@ RenderPassGBuffer::RenderPassGBuffer(Engine::D3DRenderer* renderer, unsigned int
 
 	mGBuffer = new Engine::D3DShader("../Data/SkyeCuillin/DeferredGBuffer.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::HULL_SHADER, "HS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::DOMAIN_SHADER, "DS"),
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::HULL_SHADER, "HS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::DOMAIN_SHADER, "DS"),
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	Engine::InputLayout inputLayout = Engine::InputLayout();
 	inputLayout.AddAttribute(Engine::InputLayout::Attribute("POSITION", 0, Engine::Graphics::Format::RGB32F, 0, 0, Engine::InputLayout::Classification::PER_VERTEX, 0));

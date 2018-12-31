@@ -31,9 +31,10 @@ RenderPassGenerateMipmap::RenderPassGenerateMipmap(Engine::D3DRenderer* renderer
 
 	mMipmap = new Engine::D3DShader("../Data/SkyeCuillin/Mipmap.hlsl",
 		std::vector<Engine::D3DShader::ShaderEntryPoint>
-	{
-		Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
-	});
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "GenerateMipmaps")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
 
 	mMipmapPS = new Engine::PipelineState(renderer->GetDevice(),
 		mMipmapRS,

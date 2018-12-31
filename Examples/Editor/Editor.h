@@ -509,7 +509,7 @@ namespace SkyeCuillin
 
 								delta = axis * delta;
 							}
-							
+
 							if (mSnapMode == SnapMode::REL)
 							{
 								delta.x = floorf(delta.x / mSnapStepTranslation) * mSnapStepTranslation;
@@ -1238,7 +1238,7 @@ namespace SkyeCuillin
 							{
 								/*Engine::Component* c = Engine::ComponentFactory::CreateComponent(i);
 								ent->GameObject().AddComponent(i, c);*/
-								
+
 								Engine::Command* cmd = new Engine::Command(Engine::Command::AddComponent);
 								cmd->AddArg<int>(i);
 								cmd->AddArg<std::string>("");
@@ -1265,7 +1265,7 @@ namespace SkyeCuillin
 					(mScene->GetState()->GetSelection().find(node.first) == mScene->GetState()->GetSelection().end() ? 0 : ImGuiTreeNodeFlags_Selected) |
 					(child->Children().size() == 0 ? ImGuiTreeNodeFlags_Leaf : 0) |
 					ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen);
-				
+
 				if (ImGui::BeginDragDropSource())
 				{
 					ImGui::SetDragDropPayload("SCENEGRAPH_NODE", &node, sizeof(std::pair<int, Engine::Entity*>));
@@ -1353,7 +1353,7 @@ namespace SkyeCuillin
 		{
 			static char filter[256] = { 0 };
 			static std::string selected;
-			
+
 			if (ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoCollapse))
 			{
 				ImGui::InputText("Filter", filter, 256, ImGuiInputTextFlags_EnterReturnsTrue);

@@ -140,7 +140,7 @@ namespace SkyeCuillin
 			unsigned int tmp = 1;
 			for (unsigned int i = 0; i < levels; i++)
 			{
-				nodes += min(tmp, leafs);
+				nodes += (tmp < leafs ? tmp : leafs);
 				tmp *= 8;
 			}
 			return nodes;

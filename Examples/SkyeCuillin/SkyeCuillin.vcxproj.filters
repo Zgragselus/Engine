@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Voxelize.cpp" />
-    <ClCompile Include="RenderPass.cpp" />
-    <ClCompile Include="RenderPassGBuffer.cpp" />
-    <ClCompile Include="RenderPassFullscreen.cpp" />
-    <ClCompile Include="RenderPassDeferredShading.cpp" />
-    <ClCompile Include="RenderPassCubeShadowMap.cpp" />
-    <ClCompile Include="RenderPassShadowMap.cpp" />
-    <ClCompile Include="RenderPassConeTracingGI.cpp" />
-    <ClCompile Include="RenderPassConeTracingReflection.cpp" />
-    <ClCompile Include="RenderPassSeparableBlur.cpp" />
-    <ClCompile Include="RenderPassConeTracingAO.cpp" />
     <ClCompile Include="..\..\Dependencies\Imgui\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -22,31 +10,29 @@
     <ClCompile Include="..\..\Dependencies\Imgui\imgui_draw.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ImguiSubsystem.cpp" />
-    <ClCompile Include="RenderGizmo.cpp" />
-    <ClCompile Include="RenderPassPicking.cpp" />
-    <ClCompile Include="RenderPassResolve.cpp" />
-    <ClCompile Include="DirectoryTree.cpp" />
-    <ClCompile Include="DirectoryWatch.cpp" />
-    <ClCompile Include="Editor.cpp" />
-    <ClCompile Include="LightingSystem.cpp" />
-    <ClCompile Include="GraphicsProfiler.cpp" />
-    <ClCompile Include="RenderPassGenerateMipmap.cpp" />
-    <ClCompile Include="RenderPassHiZ.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\DirectoryTree.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\DirectoryWatch.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\GraphicsProfiler.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\ImguiSubsystem.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\LightingSystem.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderGizmo.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPass.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassConeTracingAO.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassConeTracingGI.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassConeTracingReflection.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassCubeShadowMap.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassDeferredShading.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassFullscreen.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassGBuffer.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassGenerateMipmap.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassHiZ.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassPicking.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassResolve.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassSeparableBlur.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\RenderPassShadowMap.cpp" />
+    <ClCompile Include="..\..\Source\SkyeCuillin\Voxelize.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="Voxelize.h" />
-    <ClInclude Include="RenderPass.h" />
-    <ClInclude Include="RenderPassGBuffer.h" />
-    <ClInclude Include="RenderPassFullscreen.h" />
-    <ClInclude Include="RenderPassDeferredShading.h" />
-    <ClInclude Include="RenderPassCubeShadowMap.h" />
-    <ClInclude Include="RenderPassShadowMap.h" />
-    <ClInclude Include="RenderPassConeTracingGI.h" />
-    <ClInclude Include="RenderPassConeTracingReflection.h" />
-    <ClInclude Include="RenderPassSeparableBlur.h" />
-    <ClInclude Include="RenderPassConeTracingAO.h" />
     <ClInclude Include="..\..\Dependencies\Imgui\imconfig.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -65,17 +51,27 @@
     <ClInclude Include="..\..\Dependencies\Imgui\stb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ImguiSubsystem.h" />
-    <ClInclude Include="RenderGizmo.h" />
-    <ClInclude Include="RenderPassPicking.h" />
-    <ClInclude Include="RenderPassResolve.h" />
-    <ClInclude Include="DirectoryTree.h" />
-    <ClInclude Include="DirectoryWatch.h" />
-    <ClInclude Include="Editor.h" />
-    <ClInclude Include="LightingSystem.h" />
-    <ClInclude Include="GraphicsProfiler.h" />
-    <ClInclude Include="RenderPassGenerateMipmap.h" />
-    <ClInclude Include="RenderPassHiZ.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\DirectoryTree.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\DirectoryWatch.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\GraphicsProfiler.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\ImguiSubsystem.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\LightingSystem.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderGizmo.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPass.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassConeTracingAO.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassConeTracingGI.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassConeTracingReflection.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassCubeShadowMap.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassDeferredShading.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassFullscreen.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassGBuffer.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassGenerateMipmap.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassHiZ.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassPicking.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassResolve.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassSeparableBlur.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\RenderPassShadowMap.h" />
+    <ClInclude Include="..\..\Source\SkyeCuillin\Voxelize.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">
