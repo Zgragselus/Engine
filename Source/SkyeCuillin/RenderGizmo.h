@@ -74,12 +74,12 @@ namespace SkyeCuillin
 		void ProcessRenderNode(Engine::RenderNode& node);
 
 	public:
-		inline void AddLine(const Engine::float4& v0, const Engine::float4& c0, const Engine::float4& v1, const Engine::float4& c1)
+		inline bool AddLine(const Engine::float4& v0, const Engine::float4& c0, const Engine::float4& v1, const Engine::float4& c1)
 		{
 			if (mLinesVBOUsage + 10 >= mLinesVBOSize)
 			{
 				printf("Error: mLinesVBOUsage is too small!\n");
-				return;
+				return false;
 			}
 
 			mLinesVBOMem[mLinesVBOUsage] = v0.x;
@@ -97,14 +97,16 @@ namespace SkyeCuillin
 			mLinesVBOMem[mLinesVBOUsage + 4] = Pack(c1);
 
 			mLinesVBOUsage += 5;
+
+			return true;
 		}
 
-		inline void AddWidget(const Engine::float4& v, unsigned int id, Gizmo gizmo)
+		inline bool AddWidget(const Engine::float4& v, unsigned int id, Gizmo gizmo)
 		{
 			if (mIconsVBOUsage + 9 >= mIconsVBOSize)
 			{
 				printf("Error: mIconsVBOUsage is too small!\n");
-				return;
+				return false;
 			}
 
 			float coord[2][2];
@@ -121,16 +123,18 @@ namespace SkyeCuillin
 			mIconsVBOMem[mIconsVBOUsage + 8] = *(float*)&id;
 
 			mIconsVBOUsage += 9;
+
+			return true;
 		}
 
-		inline void AddTriangle(const Engine::float4& v0, const Engine::float4& c0,
+		inline bool AddTriangle(const Engine::float4& v0, const Engine::float4& c0,
 			const Engine::float4& v1, const Engine::float4& c1,
 			const Engine::float4& v2, const Engine::float4& c2)
 		{
 			if (mTrianglesVBOUsage + 15 >= mTrianglesVBOSize)
 			{
 				printf("Error: mTrianglesVBOUsage is too small!\n");
-				return;
+				return false;
 			}
 
 			mTrianglesVBOMem[mTrianglesVBOUsage] = v0.x;
@@ -156,6 +160,8 @@ namespace SkyeCuillin
 			mTrianglesVBOMem[mTrianglesVBOUsage + 4] = Pack(c2);
 
 			mTrianglesVBOUsage += 5;
+
+			return true;
 		}
 
 		inline void AddAABB(const Engine::AABB& box, const Engine::float4& color)
@@ -394,9 +400,20 @@ namespace SkyeCuillin
 
 					for (unsigned int i = 0; i < segments; i++)
 					{
-						AddLine(v[0][i], color, v[0][(i + 1) % segments], color);
-						AddLine(v[1][i], color, v[1][(i + 1) % segments], color);
-						AddLine(v[2][i], color, v[2][(i + 1) % segments], color);
+						if (!AddLine(v[0][i], color, v[0][(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[1][i], color, v[1][(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[2][i], color, v[2][(i + 1) % segments], color))
+						{
+							break;
+						}
 					}
 				}
 				break;
@@ -426,9 +443,20 @@ namespace SkyeCuillin
 
 					for (unsigned int i = 0; i < segments; i++)
 					{
-						AddLine(v[0][i], color, v[0][(i + 1) % segments], color);
-						AddLine(v[1][i], color, v[1][(i + 1) % segments], color);
-						AddLine(v[0][i], color, v[1][i], color);
+						if (!AddLine(v[0][i], color, v[0][(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[1][i], color, v[1][(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[0][i], color, v[1][i], color))
+						{
+							break;
+						}
 					}
 				}
 				break;
@@ -458,8 +486,15 @@ namespace SkyeCuillin
 
 					for (unsigned int i = 0; i < segments; i++)
 					{
-						AddLine(v[i], color, v[(i + 1) % segments], color);
-						AddLine(v[i], color, v[segments], color);
+						if (!AddLine(v[i], color, v[(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[i], color, v[segments], color))
+						{
+							break;
+						}
 					}
 				}
 				break;
@@ -500,16 +535,38 @@ namespace SkyeCuillin
 
 					for (unsigned int i = 0; i < segments; i++)
 					{
-						AddLine(v[0][i], color, v[0][(i + 1) % segments], color);
-						AddLine(v[1][i], color, v[1][(i + 1) % segments], color);
+						if (!AddLine(v[0][i], color, v[0][(i + 1) % segments], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v[1][i], color, v[1][(i + 1) % segments], color))
+						{
+							break;
+						}
 					}
 
 					for (unsigned int i = 0; i < segments / 2; i++)
 					{
-						AddLine(v1[0][i], color, v1[0][i + 1], color);
-						AddLine(v1[1][i], color, v1[1][i + 1], color);
-						AddLine(v1[2][i], color, v1[2][i + 1], color);
-						AddLine(v1[3][i], color, v1[3][i + 1], color);
+						if (!AddLine(v1[0][i], color, v1[0][i + 1], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v1[1][i], color, v1[1][i + 1], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v1[2][i], color, v1[2][i + 1], color))
+						{
+							break;
+						}
+
+						if (!AddLine(v1[3][i], color, v1[3][i + 1], color))
+						{
+							break;
+						}
 					}
 
 					AddLine(v[0][0], color, v[1][0], color);
@@ -540,9 +597,20 @@ namespace SkyeCuillin
 						Engine::float4 vert1 = Engine::float4(*v1, *(v1 + 1), *(v1 + 2), 1.0f) * mat;
 						Engine::float4 vert2 = Engine::float4(*v2, *(v2 + 1), *(v2 + 2), 1.0f) * mat;
 
-						AddLine(vert0, color, vert1, color);
-						AddLine(vert1, color, vert2, color);
-						AddLine(vert2, color, vert0, color);
+						if (!AddLine(vert0, color, vert1, color))
+						{
+							break;
+						}
+
+						if (!AddLine(vert1, color, vert2, color))
+						{
+							break;
+						}
+
+						if (!AddLine(vert2, color, vert0, color))
+						{
+							break;
+						}
 					}
 				}
 				break;
