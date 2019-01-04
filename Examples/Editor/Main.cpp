@@ -197,7 +197,7 @@ public:
 		Engine::LoaderAssimp* loader = new Engine::LoaderAssimp(mLog, mRenderer);
 		loader->SetManagers(mMeshManager, mModelManager, mTextureManager);
 		Engine::Entity* ent = FromModel("sponza", loader->Load("../Data/Example05/Sponza/sponza.obj"));
-		//Engine::Entity* entX = FromModel("env", loader->Load("../Data/Shared/Models/environment.obj"));
+		//Engine::Entity* ent = FromModel("env", loader->Load("../Data/Shared/Models/environment.obj"));
 		Engine::Entity* ent2 = FromModel("sphere", loader->Load("../Data/Shared/Models/sphere.obj"));
 		//ent2->Transformation().SetTranslation(Engine::float4(310.0f, 210.0f, -180.0f, 1.0f));
 		ent2->Transformation().SetTranslation(Engine::float4(-1096.0f, 27.0f, 10.0f, 1.0f));
@@ -570,6 +570,16 @@ public:
 						{
 							mScene->SaveScene(filename);
 						}
+					}
+
+					if (ImGui::MenuItem("Export", "CTRL+E", nullptr))
+					{
+						/*std::string filename;
+						bool save = Engine::FileDialog::Show(mLog, "Save Scene", "Skye Cuillin Scene\0*.bin\0All Files\0*.*\0", Engine::FileDialog::Type::SAVE_FILE_DIALOG, filename);
+						if (save)
+						{
+							mScene->ExportScene(filename);
+						}*/
 					}
 
 					if (ImGui::MenuItem("Exit"))

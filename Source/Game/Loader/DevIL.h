@@ -61,6 +61,35 @@ namespace Engine
 			bool mUseAlphaMipmap;
 			std::string mName;
 
+			~Image()
+			{
+				if (mMipmaps)
+				{
+					for (size_t i = 0; i < mMipLevels; i++)
+					{
+						if (mMipmaps[i])
+						{
+							delete mMipmaps[i];
+							mMipmaps[i] = nullptr;
+						}
+
+						if (i == 0)
+						{
+							mData = nullptr;
+						}
+					}
+
+					delete mMipmaps;
+					mMipmaps = nullptr;
+				}
+
+				if (mData)
+				{
+					delete mData;
+					mData = nullptr;
+				}
+			}
+
 			ALIGNED_NEW_DELETE("Game::Loader::DevIL::Image")
 		};
 
