@@ -1,6 +1,14 @@
 #ifndef __COMPONENT_STATIC__H__
 #define __COMPONENT_STATIC__H__
 
+#include "CameraComponent.h"
+#include "CollisionComponent.h"
+#include "LightComponent.h"
+#include "MaterialComponent.h"
+#include "MeshComponent.h"
+#include "RigidBodyComponent.h"
+#include "TextureComponent.h"
+
 namespace Engine
 {
 	class ComponentStatic

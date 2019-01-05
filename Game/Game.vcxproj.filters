@@ -54,6 +54,27 @@
     <ClCompile Include="..\Source\Game\Entity\Entity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\CameraComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\CollisionComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\LightComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\MaterialComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\MeshComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\RigidBodyComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\TextureComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Game\Scene\Scene.h">

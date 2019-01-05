@@ -29,7 +29,14 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Game\Entity\ComponentFactory.cpp" />
     <ClCompile Include="..\Source\Game\Entity\ComponentTypeId.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\CameraComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\CollisionComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Component\ComponentStatic.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\LightComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\MaterialComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\MeshComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\TextureComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Entity.cpp" />
     <ClCompile Include="..\Source\Game\Entity\GameObject.cpp" />
     <ClCompile Include="..\Source\Game\Loader\Assimp.cpp" />
