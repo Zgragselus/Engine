@@ -234,7 +234,8 @@ void DirectoryTree::_ImguiRenderRecord(Record* r)
 						{
 							if (ImGui::BeginDragDropSource())
 							{
-								ImGui::SetDragDropPayload("RESOURCE_MESH", node->Get()->GetMesh(j), sizeof(void*));
+								Engine::Mesh* mesh = node->Get()->GetMesh(j);
+								ImGui::SetDragDropPayload("RESOURCE_MESH", &mesh, sizeof(void*));
 								ImGui::Text("%s", node->Get()->GetMesh(j)->GetName().c_str());
 								ImGui::EndDragDropSource();
 							}

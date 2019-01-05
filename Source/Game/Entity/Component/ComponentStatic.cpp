@@ -616,6 +616,8 @@ bool MeshComponent::Editor(std::string& prev, std::string& next)
 		ComponentStatic::mEditedMeshName = mMesh->mItem->GetName();
 	}
 
+	bool dragdropChange = false;
+
 	prev = Serialize().c_str();
 
 	if (ImGui::Button(mMesh->mItem->GetName().c_str()))
@@ -624,14 +626,23 @@ bool MeshComponent::Editor(std::string& prev, std::string& next)
 		ComponentStatic::mEditedMesh = 0;
 	}
 
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("RESOURCE_MESH"))
+		{
+			ComponentStatic::mEditedMeshName = (*((Engine::Mesh**)payload->Data))->GetName();
+			dragdropChange = true;
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
 	std::stringstream ss;
 
 	ss << "MeshComponent" << std::endl;
 	ss << ComponentStatic::mEditedMeshName << std::endl;
 
 	next = ss.str();
-
-	printf("\n%s\n%s\n", prev.c_str(), next.c_str());
 
 	if (next != prev)
 	{

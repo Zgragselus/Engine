@@ -1354,12 +1354,10 @@ namespace SkyeCuillin
 			if (ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoCollapse))
 			{
 				ImGui::InputText("Filter", filter, 256, ImGuiInputTextFlags_EnterReturnsTrue);
-
-				
+								
 				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 				if (ImGui::BeginChild("RecordsBorder", ImVec2(0, -32), true, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
 				{
-					//ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 					if (ImGui::BeginChild("Records", ImVec2(0, -32), false))
 					{
 						if (ImGui::TreeNodeEx("Select:", ImGuiTreeNodeFlags_DefaultOpen))
@@ -1369,17 +1367,68 @@ namespace SkyeCuillin
 
 							for (const std::string& r : records)
 							{
-								//if (typeid(T) == typeid(Engine::Texture))
-								//{
-								//	ImGui::Image((ImTextureID)(manager->GetNode(r)->Get()->GetSRV().mGpuHandle.ptr), ImVec2(32, 32));
+								if (ImGui::TreeNodeEx(r.c_str(), ImGuiTreeNodeFlags_Leaf | (r == selected ? ImGuiTreeNodeFlags_Selected : 0)))
+								{
+									if (ImGui::IsItemClicked())
+									{
+										selected = r;
+									}
 
-								//	if (ImGui::IsItemClicked())
-								//	{
-								//		selected = r;
-								//	}
+									ImGui::TreePop();
+								}
+							}
 
-								//	ImGui::SameLine();
-								//}
+							ImGui::TreePop();
+						}
+					}
+					ImGui::EndChild();
+				}
+				ImGui::EndChild();
+				ImGui::PopStyleVar();
+
+				if (ImGui::Button("Cancel"))
+				{
+				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("OK"))
+				{
+				}
+			}
+			ImGui::End();
+		}
+
+
+		template <>
+		void ImguiManagerList<Engine::Texture>(const std::string& name, Engine::Manager<Engine::Texture>* manager)
+		{
+			static char filter[256] = { 0 };
+			static std::string selected;
+
+			if (ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoCollapse))
+			{
+				ImGui::InputText("Filter", filter, 256, ImGuiInputTextFlags_EnterReturnsTrue);
+				
+				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+				if (ImGui::BeginChild("RecordsBorder", ImVec2(0, -32), true, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
+				{
+					if (ImGui::BeginChild("Records", ImVec2(0, -32), false))
+					{
+						if (ImGui::TreeNodeEx("Select:", ImGuiTreeNodeFlags_DefaultOpen))
+						{
+							std::vector<std::string> records;
+							manager->FilterKeys(filter, records);
+
+							for (const std::string& r : records)
+							{
+								ImGui::Image((ImTextureID)(manager->GetNode(r)->Get()->GetSRV().mGpuHandle.ptr), ImVec2(32, 32));
+
+								if (ImGui::IsItemClicked())
+								{
+									selected = r;
+								}
+
+								ImGui::SameLine();
 
 								if (ImGui::TreeNodeEx(r.c_str(), ImGuiTreeNodeFlags_Leaf | (r == selected ? ImGuiTreeNodeFlags_Selected : 0)))
 								{
@@ -1396,7 +1445,6 @@ namespace SkyeCuillin
 						}
 					}
 					ImGui::EndChild();
-					//ImGui::PopStyleVar();
 				}
 				ImGui::EndChild();
 				ImGui::PopStyleVar();
@@ -1439,14 +1487,71 @@ namespace SkyeCuillin
 								break;
 							}
 						}
+					}
 
+					Engine::ComponentStatic::mEditedComponent = nullptr;
+				}
+			}
+			ImGui::End();
+		}
+
+		template <>
+		void ImguiManagerList<Engine::Mesh>(const std::string& name, Engine::Manager<Engine::Mesh>* manager)
+		{
+			static char filter[256] = { 0 };
+			static std::string selected;
+
+			if (ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoCollapse))
+			{
+				ImGui::InputText("Filter", filter, 256, ImGuiInputTextFlags_EnterReturnsTrue);
+				
+				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+				if (ImGui::BeginChild("RecordsBorder", ImVec2(0, -32), true, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
+				{
+					if (ImGui::BeginChild("Records", ImVec2(0, -32), false))
+					{
+						if (ImGui::TreeNodeEx("Select:", ImGuiTreeNodeFlags_DefaultOpen))
+						{
+							std::vector<std::string> records;
+							manager->FilterKeys(filter, records);
+
+							for (const std::string& r : records)
+							{
+								if (ImGui::TreeNodeEx(r.c_str(), ImGuiTreeNodeFlags_Leaf | (r == selected ? ImGuiTreeNodeFlags_Selected : 0)))
+								{
+									if (ImGui::IsItemClicked())
+									{
+										selected = r;
+									}
+
+									ImGui::TreePop();
+								}
+							}
+
+							ImGui::TreePop();
+						}
+					}
+					ImGui::EndChild();
+				}
+				ImGui::EndChild();
+				ImGui::PopStyleVar();
+
+				if (ImGui::Button("Cancel"))
+				{
+					Engine::ComponentStatic::mEditedMeshComponent = nullptr;
+				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("OK"))
+				{
+					if (selected.length() > 0)
+					{
 						if (Engine::ComponentStatic::mEditedMeshComponent)
 						{
 							Engine::ComponentStatic::mEditedMeshName = selected;
 						}
 					}
 
-					Engine::ComponentStatic::mEditedComponent = nullptr;
 					Engine::ComponentStatic::mEditedMeshComponent = nullptr;
 				}
 			}
