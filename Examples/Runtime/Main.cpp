@@ -381,7 +381,7 @@ public:
 		mEditor->mChange = false;
 
 		Engine::Camera* cam = mScene->GetEntity("Camera")->GameObject().Get<Engine::CameraComponent>()->Get();
-		//printf("%f %f %f\n", cam->GetForward().x, cam->GetForward().y, cam->GetForward().z);
+		printf("%f %f %f\n", cam->GetForward().x, cam->GetForward().y, cam->GetForward().z);
 		if (cam->GetType() == Engine::Camera::Type::PERSPECTIVE)
 		{
 			((Engine::PerspectiveCamera*)cam)->SetAspectRatio((float)h / (float)w);
@@ -729,10 +729,10 @@ public:
 		if (ImGui::Begin("Manager"))
 		{
 			ImGui::BeginChild("Records", ImVec2(0, -32), false);
-			if (ImGui::TreeNodeEx("Mesh Manager:", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::TreeNodeEx("Model Manager:", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				std::vector<std::string> records;
-				mMeshManager->FilterKeys("", records);
+				mModelManager->FilterKeys("", records);
 
 				for (const std::string& r : records)
 				{
@@ -751,11 +751,6 @@ public:
 		if (Engine::ComponentStatic::mEditedComponent != nullptr)
 		{
 			mEditor->ImguiManagerList<Engine::Texture>("Select Texture", mTextureManager);
-		}
-
-		if (Engine::ComponentStatic::mEditedMeshComponent != nullptr)
-		{
-			mEditor->ImguiManagerList<Engine::Mesh>("Select Mesh", mMeshManager);
 		}
 
 		if (mShowProfiler)

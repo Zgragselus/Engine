@@ -15,7 +15,8 @@ namespace Engine
 		static int mEditedTexture;
 
 		static MeshComponent* mEditedMeshComponent;
-		static std::string mEditedMesh;
+		static std::string mEditedMeshName;
+		static int mEditedMesh;
 	};
 }
 

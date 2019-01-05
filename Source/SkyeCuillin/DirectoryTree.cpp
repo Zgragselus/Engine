@@ -187,10 +187,12 @@ void DirectoryTree::_ImguiRenderRecord(Record* r)
 	for (size_t i = 0; i < r->mChildren.size(); i++)
 	{
 		bool nodeOpen = false;
-		
+
 		if (ImGui::TreeNodeEx(r->mChildren[i]->mName.c_str(),
+			//((r->mChildren[i]->mType == Type::FILE && r->mChildren[i]->mResourceType != ResourceType::MODEL) ? ImGuiTreeNodeFlags_Leaf : 0) |
 			(r->mChildren[i]->mType == Type::FILE ? ImGuiTreeNodeFlags_Leaf : 0) |
-			ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen))
+			ImGuiTreeNodeFlags_OpenOnArrow | 
+			(r->mChildren[i]->mResourceType != ResourceType::MODEL ? ImGuiTreeNodeFlags_DefaultOpen : 0)))
 		{
 			nodeOpen = true;
 
@@ -220,6 +222,25 @@ void DirectoryTree::_ImguiRenderRecord(Record* r)
 				if (ImGui::IsItemClicked())
 				{
 					printf("%s\n", r->mChildren[i]->mName.c_str());
+				}
+
+				if (r->mChildren[i]->mResourceType == ResourceType::MODEL)
+				{
+					Engine::Manager<Engine::Model>::Node* node = (Engine::Manager<Engine::Model>::Node*)(r->mChildren[i]->mResource);
+
+					for (size_t j = 0; j < node->Get()->GetMeshesCount(); j++)
+					{
+						if (ImGui::TreeNodeEx(node->Get()->GetMesh(j)->GetName().c_str(), ImGuiTreeNodeFlags_Leaf))
+						{
+							if (ImGui::BeginDragDropSource())
+							{
+								ImGui::SetDragDropPayload("RESOURCE_MESH", node->Get()->GetMesh(j), sizeof(void*));
+								ImGui::Text("%s", node->Get()->GetMesh(j)->GetName().c_str());
+								ImGui::EndDragDropSource();
+							}
+						}
+						ImGui::TreePop();
+					}
 				}
 			}
 		}

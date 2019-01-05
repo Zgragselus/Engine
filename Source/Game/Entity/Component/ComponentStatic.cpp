@@ -605,13 +605,40 @@ bool MaterialComponent::Editor(std::string& prev, std::string& next)
 }
 
 MeshComponent* ComponentStatic::mEditedMeshComponent;
-std::string ComponentStatic::mEditedMesh;
+std::string ComponentStatic::mEditedMeshName;
+int ComponentStatic::mEditedMesh = -1;
 
 bool MeshComponent::Editor(std::string& prev, std::string& next)
 {
-	if (ComponentStatic::mEditedMeshComponent == nullptr)
+	if (ComponentStatic::mEditedMeshComponent == nullptr &&
+		ComponentStatic::mEditedMesh == -1)
 	{
-		//ComponentStatic::mEditedMesh = mMesh->mItem->GetName();
+		ComponentStatic::mEditedMeshName = mMesh->mItem->GetName();
+	}
+
+	prev = Serialize().c_str();
+
+	if (ImGui::Button(mMesh->mItem->GetName().c_str()))
+	{
+		ComponentStatic::mEditedMeshComponent = this;
+		ComponentStatic::mEditedMesh = 0;
+	}
+
+	std::stringstream ss;
+
+	ss << "MeshComponent" << std::endl;
+	ss << ComponentStatic::mEditedMeshName << std::endl;
+
+	next = ss.str();
+
+	printf("\n%s\n%s\n", prev.c_str(), next.c_str());
+
+	if (next != prev)
+	{
+		mMesh = mManager->GetNode(ComponentStatic::mEditedMeshName);
+		ComponentStatic::mEditedMesh = -1;
+
+		return true;
 	}
 
 	return false;

@@ -1236,9 +1236,6 @@ namespace SkyeCuillin
 						{
 							if (ImGui::Button(Engine::ComponentTypeId::GetName(i).c_str()))
 							{
-								/*Engine::Component* c = Engine::ComponentFactory::CreateComponent(i);
-								ent->GameObject().AddComponent(i, c);*/
-
 								Engine::Command* cmd = new Engine::Command(Engine::Command::AddComponent);
 								cmd->AddArg<int>(i);
 								cmd->AddArg<std::string>("");
@@ -1358,6 +1355,7 @@ namespace SkyeCuillin
 			{
 				ImGui::InputText("Filter", filter, 256, ImGuiInputTextFlags_EnterReturnsTrue);
 
+				
 				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 				if (ImGui::BeginChild("RecordsBorder", ImVec2(0, -32), true, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
 				{
@@ -1371,17 +1369,17 @@ namespace SkyeCuillin
 
 							for (const std::string& r : records)
 							{
-								if (typeid(T) == typeid(Engine::Texture))
-								{
-									ImGui::Image((ImTextureID)(manager->GetNode(r)->Get()->GetSRV().mGpuHandle.ptr), ImVec2(32, 32));
+								//if (typeid(T) == typeid(Engine::Texture))
+								//{
+								//	ImGui::Image((ImTextureID)(manager->GetNode(r)->Get()->GetSRV().mGpuHandle.ptr), ImVec2(32, 32));
 
-									if (ImGui::IsItemClicked())
-									{
-										selected = r;
-									}
+								//	if (ImGui::IsItemClicked())
+								//	{
+								//		selected = r;
+								//	}
 
-									ImGui::SameLine();
-								}
+								//	ImGui::SameLine();
+								//}
 
 								if (ImGui::TreeNodeEx(r.c_str(), ImGuiTreeNodeFlags_Leaf | (r == selected ? ImGuiTreeNodeFlags_Selected : 0)))
 								{
@@ -1396,13 +1394,11 @@ namespace SkyeCuillin
 
 							ImGui::TreePop();
 						}
-
-						ImGui::EndChild();
 					}
-					//ImGui::PopStyleVar();
-
 					ImGui::EndChild();
+					//ImGui::PopStyleVar();
 				}
+				ImGui::EndChild();
 				ImGui::PopStyleVar();
 
 				if (ImGui::Button("Cancel"))
@@ -1415,34 +1411,43 @@ namespace SkyeCuillin
 				{
 					if (selected.length() > 0)
 					{
-						switch (Engine::ComponentStatic::mEditedTexture)
+						if (Engine::ComponentStatic::mEditedComponent)
 						{
-						case 0:
-							Engine::ComponentStatic::mEditedDiffuse = selected;
-							break;
+							switch (Engine::ComponentStatic::mEditedTexture)
+							{
+							case 0:
+								Engine::ComponentStatic::mEditedDiffuse = selected;
+								break;
 
-						case 1:
-							Engine::ComponentStatic::mEditedNormals = selected;
-							break;
+							case 1:
+								Engine::ComponentStatic::mEditedNormals = selected;
+								break;
 
-						case 2:
-							Engine::ComponentStatic::mEditedHeight = selected;
-							break;
+							case 2:
+								Engine::ComponentStatic::mEditedHeight = selected;
+								break;
 
-						case 3:
-							Engine::ComponentStatic::mEditedRoughness = selected;
-							break;
+							case 3:
+								Engine::ComponentStatic::mEditedRoughness = selected;
+								break;
 
-						case 4:
-							Engine::ComponentStatic::mEditedMetallic = selected;
-							break;
+							case 4:
+								Engine::ComponentStatic::mEditedMetallic = selected;
+								break;
 
-						default:
-							break;
+							default:
+								break;
+							}
+						}
+
+						if (Engine::ComponentStatic::mEditedMeshComponent)
+						{
+							Engine::ComponentStatic::mEditedMeshName = selected;
 						}
 					}
 
 					Engine::ComponentStatic::mEditedComponent = nullptr;
+					Engine::ComponentStatic::mEditedMeshComponent = nullptr;
 				}
 			}
 			ImGui::End();
