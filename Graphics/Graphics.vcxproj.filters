@@ -85,6 +85,12 @@
     <ClCompile Include="..\Source\Graphics\Common\Mesh\Model.cpp">
       <Filter>Common\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Terrain\TerrainTile.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Terrain\TerrainGrid.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Graphics\Graphics.h" />
@@ -202,6 +208,12 @@
     <ClInclude Include="..\Source\Graphics\Common\Mesh\Model.h">
       <Filter>Common\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Terrain\TerrainTile.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Terrain\TerrainGrid.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="D3D12">
@@ -239,6 +251,9 @@
     </Filter>
     <Filter Include="Common\Texture">
       <UniqueIdentifier>{1314c6e2-8f62-4ae2-af45-ea457427cdd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{9464e7a4-e811-4bb8-87b0-d706227967c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
