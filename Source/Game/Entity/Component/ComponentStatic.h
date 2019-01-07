@@ -8,6 +8,7 @@
 #include "MeshComponent.h"
 #include "RigidBodyComponent.h"
 #include "TextureComponent.h"
+#include "TerrainComponent.h"
 
 namespace Engine
 {

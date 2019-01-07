@@ -208,6 +208,11 @@ public:
 		ent2->Children()[0]->GameObject().Add<Engine::RigidBodyComponent>(rb);
 		ent2->Update();
 
+		Engine::TerrainGrid* grid = new Engine::TerrainGrid(mRenderer, mLog, 4, 100.0f, 8, 8, 0, 0, 1.0f);
+		Engine::Entity* terrain = new Engine::Entity("Terrain");
+		terrain->GameObject().Add<Engine::TerrainComponent>(grid);
+		mScene->AddEntity(terrain, -1);
+
 		/*Engine::Entity* tmp = FromModel("cube", loader->Load("../Data/Shared/Models/cube.obj"));
 		Engine::Mesh* m = tmp->Children()[0]->GameObject().Get<Engine::MeshComponent>()->GetMesh();
 		Engine::MaterialComponent* mat = tmp->Children()[0]->GameObject().Get<Engine::MaterialComponent>();

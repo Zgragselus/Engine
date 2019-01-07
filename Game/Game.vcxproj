@@ -36,6 +36,7 @@
     <ClCompile Include="..\Source\Game\Entity\Component\MaterialComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Component\MeshComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Component\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\Source\Game\Entity\Component\TerrainComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Component\TextureComponent.cpp" />
     <ClCompile Include="..\Source\Game\Entity\Entity.cpp" />
     <ClCompile Include="..\Source\Game\Entity\GameObject.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="..\Source\Game\Entity\Component\MaterialComponent.h" />
     <ClInclude Include="..\Source\Game\Entity\Component\MeshComponent.h" />
     <ClInclude Include="..\Source\Game\Entity\Component\RigidBodyComponent.h" />
+    <ClInclude Include="..\Source\Game\Entity\Component\TerrainComponent.h" />
     <ClInclude Include="..\Source\Game\Entity\Component\TextureComponent.h" />
     <ClInclude Include="..\Source\Game\Entity\Entity.h" />
     <ClInclude Include="..\Source\Game\Entity\GameObject.h" />

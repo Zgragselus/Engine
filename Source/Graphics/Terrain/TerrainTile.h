@@ -109,35 +109,20 @@ namespace Engine
 			}
 		}
 
-		/*virtual void Render()
-		{
-			GLCALL(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
-			mVertexArray->Enable();
-			mIndexBuffer[0]->Enable();
-			mVertexBuffer->DrawElements(GL_TRIANGLES, (int)mIndexBuffer[0]->GetNumElements());
-			mVertexArray->Disable();
-			GLCALL(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
-		}*/
-
 		inline unsigned int GetLevelsCount()
 		{
 			return mLevels;
 		}
 
-		/*inline VertexArray* GetVAO()
-		{
-			return mVertexArray;
-		}
-
-		inline VertexBuffer* GetVBO()
+		inline GpuBuffer* GetVertexBuffer()
 		{
 			return mVertexBuffer;
 		}
 
-		inline IndexBuffer** GetIBO()
+		inline GpuBuffer** GetIndexBuffersArray()
 		{
 			return mIndexBuffer;
-		}*/
+		}
 
 		ALIGNED_NEW_DELETE("Engine::TerrainTile")
 	};

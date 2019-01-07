@@ -55,18 +55,18 @@ namespace Engine
 			int tmp = (b.t00 + b.t10) / 2;
 
 			out.push_back(b.t00);
-			out.push_back(tmp);
 			out.push_back(mid);
+			out.push_back(tmp);
 
 			out.push_back(mid);
-			out.push_back(tmp);
 			out.push_back(b.t10);
+			out.push_back(tmp);
 		}
 		else
 		{
 			out.push_back(b.t00);
-			out.push_back(b.t10);
 			out.push_back(mid);
+			out.push_back(b.t10);
 		}
 
 		// Right
@@ -75,18 +75,18 @@ namespace Engine
 			int tmp = (b.t10 + b.t11) / 2;
 
 			out.push_back(b.t10);
-			out.push_back(tmp);
 			out.push_back(mid);
+			out.push_back(tmp);
 
 			out.push_back(mid);
-			out.push_back(tmp);
 			out.push_back(b.t11);
+			out.push_back(tmp);
 		}
 		else
 		{
 			out.push_back(b.t10);
-			out.push_back(b.t11);
 			out.push_back(mid);
+			out.push_back(b.t11);
 		}
 
 		// Top
@@ -95,18 +95,18 @@ namespace Engine
 			int tmp = (b.t11 + b.t01) / 2;
 
 			out.push_back(b.t11);
-			out.push_back(tmp);
 			out.push_back(mid);
+			out.push_back(tmp);
 
 			out.push_back(mid);
-			out.push_back(tmp);
 			out.push_back(b.t01);
+			out.push_back(tmp);
 		}
 		else
 		{
 			out.push_back(b.t11);
-			out.push_back(b.t01);
 			out.push_back(mid);
+			out.push_back(b.t01);
 		}
 
 		// Left
@@ -115,18 +115,18 @@ namespace Engine
 			int tmp = (b.t01 + b.t00) / 2;
 
 			out.push_back(b.t01);
-			out.push_back(tmp);
 			out.push_back(mid);
+			out.push_back(tmp);
 
 			out.push_back(mid);
-			out.push_back(tmp);
 			out.push_back(b.t00);
+			out.push_back(tmp);
 		}
 		else
 		{
 			out.push_back(b.t01);
-			out.push_back(b.t00);
 			out.push_back(mid);
+			out.push_back(b.t00);
 		}
 	}
 
@@ -145,18 +145,36 @@ namespace Engine
 		// Prepare full vertex buffer (fully tesselalted tile), actual tessellation is done through index buffers
 		unsigned int verts = tessellation[0] * tessellation[1];
 		std::vector<std::vector<unsigned int> > indices;
-		float* vertices = new float[4 * verts];
+		float* vertices = new float[16 * verts];
 
 		float step[2] = { scale / (float)(tessellation[0] - 1), scale / (float)(tessellation[1] - 1) };
+		float tstep[2] = { 1.0f / (float)(tessellation[0] - 1), 1.0f / (float)(tessellation[1] - 1) };
 
 		for (int i = 0; i < tessellation[1]; i++)
 		{
 			for (int j = 0; j < tessellation[0]; j++)
 			{
-				vertices[(j + i * tessellation[0]) * 4 + 0] = j * step[0] - scale * 0.5f;
-				vertices[(j + i * tessellation[0]) * 4 + 1] = 1.0f;
-				vertices[(j + i * tessellation[0]) * 4 + 2] = i * step[1] - scale * 0.5f;
-				vertices[(j + i * tessellation[0]) * 4 + 3] = 1.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 0] = j * step[0] - scale * 0.5f;
+				vertices[(j + i * tessellation[0]) * 16 + 1] = 1.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 2] = i * step[1] - scale * 0.5f;
+
+				vertices[(j + i * tessellation[0]) * 16 + 3] = 0.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 4] = 1.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 5] = 0.0f;
+
+				vertices[(j + i * tessellation[0]) * 16 + 6] = 1.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 7] = 0.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 8] = 0.0f;
+
+				vertices[(j + i * tessellation[0]) * 16 + 9] = 0.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 10] = 0.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 11] = 1.0f;
+
+				vertices[(j + i * tessellation[0]) * 16 + 12] = j * tstep[0];
+				vertices[(j + i * tessellation[0]) * 16 + 13] = i * tstep[1];
+
+				vertices[(j + i * tessellation[0]) * 16 + 14] = 0.0f;
+				vertices[(j + i * tessellation[0]) * 16 + 15] = 0.0f;
 			}
 		}
 
@@ -254,12 +272,12 @@ namespace Engine
 				indices.push_back(std::vector<unsigned int>());
 				const Bounds& b = q.front();
 				indices[lvl].push_back(b.t00);
-				indices[lvl].push_back(b.t10);
 				indices[lvl].push_back(b.t01);
+				indices[lvl].push_back(b.t10);
 
 				indices[lvl].push_back(b.t11);
-				indices[lvl].push_back(b.t01);
 				indices[lvl].push_back(b.t10);
+				indices[lvl].push_back(b.t01);
 				q.pop();
 
 				q.push(Bounds(indices[lvl][0], indices[lvl][1], indices[lvl][2], indices[lvl][3]));
@@ -268,7 +286,7 @@ namespace Engine
 		}
 
 		mVertexBuffer = new TypedBuffer(Graphics::R32F);
-		mVertexBuffer->Init(renderer, verts, sizeof(float) * 4, vertices);
+		mVertexBuffer->Init(renderer, verts, sizeof(float) * 16, vertices);
 
 		mIndexBufferCount = (unsigned int)indices.size();
 		mIndexBuffer = new GpuBuffer*[mIndexBufferCount];

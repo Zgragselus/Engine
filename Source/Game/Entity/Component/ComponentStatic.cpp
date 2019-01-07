@@ -18,3 +18,4 @@ std::string MeshComponent::mComponentName = "MeshComponent";
 std::string TextureComponent::mComponentName = "TextureComponent";
 std::string CollisionComponent::mComponentName = "CollisionComponent";
 std::string RigidBodyComponent::mComponentName = "RigidBodyComponent";
+std::string TerrainComponent::mComponentName = "TerrainComponent";

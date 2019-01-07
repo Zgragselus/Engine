@@ -75,6 +75,9 @@
     <ClCompile Include="..\Source\Game\Entity\Component\TextureComponent.cpp">
       <Filter>Entity\Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Game\Entity\Component\TerrainComponent.cpp">
+      <Filter>Entity\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Game\Scene\Scene.h">
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Game\Entity\ComponentFactory.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Entity\Component\TerrainComponent.h">
+      <Filter>Entity\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

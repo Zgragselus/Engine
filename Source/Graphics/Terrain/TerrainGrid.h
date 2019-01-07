@@ -92,6 +92,20 @@ namespace Engine
 			delete mTile;
 		}
 
+		inline void Render(GraphicsContext* context)
+		{
+			for (unsigned int i = 0; i < mTiles[0]; i++)
+			{
+				for (unsigned int j = 0; j < mTiles[1]; j++)
+				{
+					int lvl = mLod[i][j];
+					context->SetIndexBuffer(mTile->GetIndexBuffersArray()[lvl]->IndexBufferView(0, (unsigned int)mTile->GetIndexBuffersArray()[lvl]->Size()));
+					context->SetVertexBuffer(0, mTile->GetVertexBuffer()->VertexBufferView(0, (unsigned int)mTile->GetVertexBuffer()->Size(), (unsigned int)mTile->GetVertexBuffer()->ElementSize()));
+					context->DrawIndexed((unsigned int)mTile->GetIndexBuffersArray()[lvl]->NumElements(), 0, 0);
+				}
+			}
+		}
+
 		/*void Render(Shader* shader)
 		{
 			shader->SetFloat(shader->GetVariable("Size"), mSize);

@@ -61,8 +61,8 @@ RenderPassGBuffer::RenderPassGBuffer(Engine::D3DRenderer* renderer, unsigned int
 		mGBufferRS,
 		mGBuffer,
 		Engine::BlendState::CreateStateD3D(true),
-		Engine::RasterizerState::CreateStateD3D(),
-		//Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
+		//Engine::RasterizerState::CreateStateD3D(),
+		Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
 		&dsState,
 		&inputLayout,
 		Engine::PipelineState::PrimitiveType::PATCH,
@@ -127,6 +127,7 @@ void RenderPassGBuffer::Process(Engine::Entity* camera, Engine::DescriptorHeap* 
 		context->SetPrimitiveTopology(Engine::Graphics::PATCHLIST_3);
 		context->SetConstantBuffer(0, mCameraBuffer->GetGpuVirtualAddress());
 
+		bool matused = false;
 		int batchBound = -1;
 		for (const Engine::RenderNode& node : nodes)
 		{
@@ -141,6 +142,7 @@ void RenderPassGBuffer::Process(Engine::Entity* camera, Engine::DescriptorHeap* 
 				context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(4, node.mObject->Get<Engine::MaterialComponent>()->GetRoughnessMap()->GetSRV().mGpuHandle);
 				context->GetCommandList()->Get()->SetGraphicsRootDescriptorTable(5, node.mObject->Get<Engine::MaterialComponent>()->GetHeightMap()->GetSRV().mGpuHandle);
 				hasMaterial = true;
+				matused = true;
 			}
 
 			if (node.mObject->Has<Engine::MeshComponent>() && hasMaterial)
@@ -153,6 +155,18 @@ void RenderPassGBuffer::Process(Engine::Entity* camera, Engine::DescriptorHeap* 
 				context->SetConstants(7, Engine::DWParam(node.mID % 16));
 
 				node.mObject->Get<Engine::MeshComponent>()->GetMesh()->Render(context);
+			}
+
+			if (node.mObject->Has<Engine::TerrainComponent>() && matused)
+			{
+				if (batchBound != batch)
+				{
+					batchBound = batch;
+					context->SetConstantBuffer(6, matrices->GetGpuVirtualAddress(batch * 16 * sizeof(float) * 16 * 2));
+				}
+				context->SetConstants(7, Engine::DWParam(node.mID % 16));
+
+				node.mObject->Get<Engine::TerrainComponent>()->GetTerrain()->Render(context);
 			}
 		}
 
