@@ -208,7 +208,7 @@ public:
 		ent2->Children()[0]->GameObject().Add<Engine::RigidBodyComponent>(rb);
 		ent2->Update();
 
-		Engine::TerrainGrid* grid = new Engine::TerrainGrid(mRenderer, mLog, 4, 100.0f, 8, 8, 0, 0, 1.0f);
+		Engine::TerrainGrid* grid = new Engine::TerrainGrid(mRenderer, mLog, 4, 25.0f, 32, 32, -400.0f, -400.0f, 40.0f);
 		Engine::Entity* terrain = new Engine::Entity("Terrain");
 		terrain->GameObject().Add<Engine::TerrainComponent>(grid);
 		mScene->AddEntity(terrain, -1);

@@ -13,39 +13,43 @@ namespace Engine
 		int mid = (b.t00 + b.t11) / 2;
 		int flags = additional & FULL;
 
-		// Handle south flag
-		if (additional & SOUTH)
-		{
-			if (b.t00 < s)
-			{
-				flags |= SOUTH;
-			}
-		}
-
 		// Handle north flag
 		if (additional & NORTH)
 		{
-			if (b.t11 > (s * (s - 1)))
+			if ((b.t01 % s) == s - 1)
+			//if (b.t11 > (s * (s - 1)))
 			{
 				flags |= NORTH;
-			}
-		}
-
-		// Handle east flag
-		if (additional & EAST)
-		{
-			if ((b.t10 % s) == s - 1)
-			{
-				flags |= EAST;
 			}
 		}
 
 		// Handle west flag
 		if (additional & WEST)
 		{
-			if ((b.t00 % s) == 0)
+			if (b.t00 < s)
+			//if ((b.t00 % s) == 0)
 			{
 				flags |= WEST;
+			}
+		}
+
+		// Handle south flag
+		if (additional & SOUTH)
+		{
+			if ((b.t00 % s) == 0)
+			//if (b.t00 < s)
+			{
+				flags |= SOUTH;
+			}
+		}
+
+		// Handle east flag
+		if (additional & EAST)
+		{
+			if (b.t11 > (s * (s - 1)))
+			//if ((b.t01 % s) == s - 1)
+			{
+				flags |= EAST;
 			}
 		}
 
@@ -55,18 +59,18 @@ namespace Engine
 			int tmp = (b.t00 + b.t10) / 2;
 
 			out.push_back(b.t00);
-			out.push_back(mid);
 			out.push_back(tmp);
+			out.push_back(mid);
 
 			out.push_back(mid);
-			out.push_back(b.t10);
 			out.push_back(tmp);
+			out.push_back(b.t10);
 		}
 		else
 		{
 			out.push_back(b.t00);
-			out.push_back(mid);
 			out.push_back(b.t10);
+			out.push_back(mid);
 		}
 
 		// Right
@@ -75,18 +79,18 @@ namespace Engine
 			int tmp = (b.t10 + b.t11) / 2;
 
 			out.push_back(b.t10);
-			out.push_back(mid);
 			out.push_back(tmp);
+			out.push_back(mid);
 
 			out.push_back(mid);
-			out.push_back(b.t11);
 			out.push_back(tmp);
+			out.push_back(b.t11);
 		}
 		else
 		{
 			out.push_back(b.t10);
-			out.push_back(mid);
 			out.push_back(b.t11);
+			out.push_back(mid);
 		}
 
 		// Top
@@ -95,18 +99,18 @@ namespace Engine
 			int tmp = (b.t11 + b.t01) / 2;
 
 			out.push_back(b.t11);
-			out.push_back(mid);
 			out.push_back(tmp);
+			out.push_back(mid);
 
 			out.push_back(mid);
-			out.push_back(b.t01);
 			out.push_back(tmp);
+			out.push_back(b.t01);
 		}
 		else
 		{
 			out.push_back(b.t11);
-			out.push_back(mid);
 			out.push_back(b.t01);
+			out.push_back(mid);
 		}
 
 		// Left
@@ -115,18 +119,18 @@ namespace Engine
 			int tmp = (b.t01 + b.t00) / 2;
 
 			out.push_back(b.t01);
-			out.push_back(mid);
 			out.push_back(tmp);
+			out.push_back(mid);
 
 			out.push_back(mid);
-			out.push_back(b.t00);
 			out.push_back(tmp);
+			out.push_back(b.t00);
 		}
 		else
 		{
 			out.push_back(b.t01);
-			out.push_back(mid);
 			out.push_back(b.t00);
+			out.push_back(mid);
 		}
 	}
 
@@ -304,6 +308,8 @@ namespace Engine
 	/// <summary>Destructor - free used memory</summary>
 	TerrainTile::~TerrainTile()
 	{
+		printf("DESTRUCTOR!!!\n");
+
 		delete mVertexBuffer;
 
 		for (unsigned int i = 0; i < mIndexBufferCount; i++)

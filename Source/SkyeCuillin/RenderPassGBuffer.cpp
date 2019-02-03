@@ -61,8 +61,8 @@ RenderPassGBuffer::RenderPassGBuffer(Engine::D3DRenderer* renderer, unsigned int
 		mGBufferRS,
 		mGBuffer,
 		Engine::BlendState::CreateStateD3D(true),
-		//Engine::RasterizerState::CreateStateD3D(),
-		Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
+		Engine::RasterizerState::CreateStateD3D(),
+		//Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
 		&dsState,
 		&inputLayout,
 		Engine::PipelineState::PrimitiveType::PATCH,
@@ -156,6 +156,11 @@ void RenderPassGBuffer::Process(Engine::Entity* camera, Engine::DescriptorHeap* 
 
 				node.mObject->Get<Engine::MeshComponent>()->GetMesh()->Render(context);
 			}
+		}
+			
+		for (const Engine::RenderNode& node : nodes)
+		{
+			int batch = node.mID / 16;
 
 			if (node.mObject->Has<Engine::TerrainComponent>() && matused)
 			{

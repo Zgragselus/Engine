@@ -114,6 +114,11 @@ namespace Engine
 			return mLevels;
 		}
 
+		inline unsigned int GetIndexBuffersCount()
+		{
+			return mIndexBufferCount;
+		}
+
 		inline GpuBuffer* GetVertexBuffer()
 		{
 			return mVertexBuffer;

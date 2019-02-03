@@ -33,10 +33,7 @@ namespace Engine
 			return mComponentName;
 		}
 
-		virtual bool Editor(std::string& prev, std::string& next)
-		{
-			return false;
-		}
+		virtual bool Editor(std::string& prev, std::string& next);
 
 		virtual std::string Serialize()
 		{
@@ -47,10 +44,7 @@ namespace Engine
 			return ss.str();
 		}
 
-		virtual void Deserialize(const std::string& s)
-		{
-
-		}
+		virtual void Deserialize(const std::string& s);
 
 		inline TerrainGrid* GetTerrain()
 		{

@@ -174,6 +174,7 @@ PSOut PS(DSOut input)
 	float4 diffuseMap = diffuse.Sample(anisoSampler, texCoord);
 	//result.color = diffuseMap;
 	result.color = float4(pow(max(diffuseMap.x, 0.0f), 2.2f), pow(max(diffuseMap.y, 0.0f), 2.2f), pow(max(diffuseMap.z, 0.0f), 2.2f), diffuseMap.w);
+	//result.color = float4(0.0f, 1.0f, 0.0f, 1.0f);
 	//result.color = float4(input.tessfactor, input.tessfactor, input.tessfactor, 1.0f);
 
 	float3 normalsMap = normalize(mul(normals.Sample(anisoSampler, texCoord).xyz * 2.0f - 1.0f, tangentFrame));

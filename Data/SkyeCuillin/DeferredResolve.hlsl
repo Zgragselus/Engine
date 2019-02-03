@@ -85,7 +85,7 @@ float4 PS(VSOut input, uint sampleID : SV_SampleIndex) : SV_TARGET
 	uint2 coord = uint2(input.texCoord.x * dimensions.x, input.texCoord.y * dimensions.y);
 
 	float4 diffuse = sourceAlbedo.Load(coord, sampleID);
-
+	
 	float4 data = sourceNormals.Load(coord, sampleID);
 	float3 normals = DecodeSpheremap(data.xy);
 
