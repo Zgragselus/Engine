@@ -260,6 +260,7 @@
     <ClCompile Include="..\Source\Graphics\D3D12\Resource\PixelBuffer.cpp" />
     <ClCompile Include="..\Source\Graphics\D3D12\Texture\Sampler.cpp" />
     <ClCompile Include="..\Source\Graphics\D3D12\Texture\Texture.cpp" />
+    <ClCompile Include="..\Source\Graphics\Terrain\HeightTile.cpp" />
     <ClCompile Include="..\Source\Graphics\Terrain\TerrainGrid.cpp" />
     <ClCompile Include="..\Source\Graphics\Terrain\TerrainTile.cpp" />
   </ItemGroup>
@@ -303,6 +304,7 @@
     <ClInclude Include="..\Source\Graphics\D3D12\Texture\Sampler.h" />
     <ClInclude Include="..\Source\Graphics\D3D12\Texture\Texture.h" />
     <ClInclude Include="..\Source\Graphics\Graphics.h" />
+    <ClInclude Include="..\Source\Graphics\Terrain\HeightTile.h" />
     <ClInclude Include="..\Source\Graphics\Terrain\TerrainGrid.h" />
     <ClInclude Include="..\Source\Graphics\Terrain\TerrainTile.h" />
   </ItemGroup>

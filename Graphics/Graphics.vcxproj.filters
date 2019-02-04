@@ -91,6 +91,9 @@
     <ClCompile Include="..\Source\Graphics\Terrain\TerrainGrid.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Terrain\HeightTile.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Graphics\Graphics.h" />
@@ -212,6 +215,9 @@
       <Filter>Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Terrain\TerrainGrid.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Terrain\HeightTile.h">
       <Filter>Terrain</Filter>
     </ClInclude>
   </ItemGroup>

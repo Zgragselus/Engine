@@ -13,11 +13,19 @@ namespace Engine
 			change = true;
 		}
 
+		float offset[2];
+		mTerrainGrid->GetOffset(offset[0], offset[1]);
+		if (ImGui::InputFloat2("Offset", offset))
+		{
+			change = true;
+		}
+		
 		if (change)
 		{
 			prev = Serialize().c_str();
 
 			mTerrainGrid->SetLodScale(lodscale);
+			mTerrainGrid->SetOffset(offset[0], offset[1]);
 
 			next = Serialize().c_str();
 
@@ -62,12 +70,12 @@ namespace Engine
 
 	void TerrainComponent::Deserialize(const std::string& s)
 	{
-		/*std::vector<std::string> lines = String::Split(s, '\n');
+		std::vector<std::string> lines = String::Split(s, '\n');
 
 		std::vector<std::string> dataVec;
 		dataVec.push_back(lines[1]);
 		std::string data = String::Join(dataVec, '\n');
 
-		mBody->Deserialize(data);*/
+		mTerrainGrid->Deserialize(data);
 	}
 }

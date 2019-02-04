@@ -41,7 +41,7 @@ namespace Engine
 
 			ss << "TerrainComponent" << std::endl;
 
-			return ss.str();
+			return (ss.str() + mTerrainGrid->Serialize());
 		}
 
 		virtual void Deserialize(const std::string& s);

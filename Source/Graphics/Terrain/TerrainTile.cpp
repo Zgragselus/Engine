@@ -308,8 +308,6 @@ namespace Engine
 	/// <summary>Destructor - free used memory</summary>
 	TerrainTile::~TerrainTile()
 	{
-		printf("DESTRUCTOR!!!\n");
-
 		delete mVertexBuffer;
 
 		for (unsigned int i = 0; i < mIndexBufferCount; i++)

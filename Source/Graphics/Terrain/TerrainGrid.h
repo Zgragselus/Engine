@@ -24,6 +24,9 @@ namespace Engine
 		GpuMappedBuffer* mMatricesBuffer;
 		void* mMatricesBufferPtr;
 
+		unsigned int mHeightmapSize;
+		float** mHeightmapData;
+
 		int GetLevel(int base)
 		{
 			int odds = base / 2;
@@ -33,13 +36,30 @@ namespace Engine
 	public:
 		inline float GetLodScale()
 		{
-			return mSize;
+			return mLodScale;
 		}
 
 		inline void SetLodScale(float lodscale)
 		{
 			mLodScale = lodscale;
 
+			UpdateGrid();
+		}
+
+		inline void GetOffset(float& x, float& y)
+		{
+			x = mOffset[0];
+			y = mOffset[1];
+		}
+
+		inline void SetOffset(float x, float y)
+		{
+			mOffset[0] = x;
+			mOffset[1] = y;
+		}
+
+		inline void UpdateGrid()
+		{
 			for (unsigned int i = 0; i < mTiles[0]; i++)
 			{
 				for (unsigned int j = 0; j < mTiles[1]; j++)
@@ -58,6 +78,28 @@ namespace Engine
 					}
 					mLevel[i][j] = mTile->GetLevelsCount() - 1 - lod;
 					mLod[i][j] = GetLevel(mLevel[i][j]);
+				}
+			}
+
+			for (unsigned int i = 0; i < mTiles[0]; i++)
+			{
+				for (unsigned int j = 0; j < mTiles[1]; j++)
+				{
+					int left = ((int)i - 1) < 0 ? 0 : ((int)i - 1);
+					int right = ((int)i + 1) < ((int)mTiles[0] - 1) ? ((int)i + 1) : ((int)mTiles[0] - 1);
+					int top = ((int)j + 1) < ((int)mTiles[1] - 1) ? ((int)j + 1) : ((int)mTiles[1] - 1);
+					int bottom = ((int)j - 1) < 0 ? 0 : ((int)j - 1);
+
+					int tile = 0;
+					tile |= mLevel[left][j] > mLevel[i][j] ? TerrainTile::SOUTH : 0;
+					tile |= mLevel[right][j] > mLevel[i][j] ? TerrainTile::NORTH : 0;
+					tile |= mLevel[i][top] > mLevel[i][j] ? TerrainTile::EAST : 0;
+					tile |= mLevel[i][bottom] > mLevel[i][j] ? TerrainTile::WEST : 0;
+
+					if (mLevel[i][j] % 2 == 1)
+					{
+						mLod[i][j] += mTile->GetOffset(tile);
+					}
 				}
 			}
 		}
@@ -84,54 +126,7 @@ namespace Engine
 				mLevel[i] = new unsigned int[mTiles[1]];
 			}
 
-			for (unsigned int i = 0; i < mTile->GetLevelsCount(); i++)
-			{
-				int lvl = GetLevel(i);
-				printf("%d\n", lvl);
-			}
-
-			for (unsigned int i = 0; i < mTiles[0]; i++)
-			{
-				for (unsigned int j = 0; j < mTiles[1]; j++)
-				{
-					float x = mOffset[0] + mSize * i + mSize * 0.5f;
-					float y = mOffset[1] + mSize * j + mSize * 0.5f;
-					float d = sqrt(x * x + y * y);
-					int lod = (int)(d / mLodScale);
-					if (lod < 0)
-					{
-						lod = 0;
-					}
-					else if (lod >= (int)mTile->GetLevelsCount())
-					{
-						lod = mTile->GetLevelsCount() - 1;
-					}
-					mLevel[i][j] = mTile->GetLevelsCount() - 1 - lod;
-					mLod[i][j] = GetLevel(mLevel[i][j]);
-				}
-			}
-
-			for (unsigned int i = 0; i < mTiles[0]; i++)
-			{
-				for (unsigned int j = 0; j < mTiles[1]; j++)
-				{
-					int left = ((int)i - 1) < 0 ? 0 : (i - 1);
-					int right = (i + 1) < ((int)mTiles[0] - 1) ? (i + 1) : (mTiles[0] - 1);
-					int top = (j + 1) < ((int)mTiles[1] - 1) ? (j + 1) : (mTiles[1] - 1);
-					int bottom = ((int)j - 1) < 0 ? 0 : (j - 1);
-
-					int tile = 0;
-					tile |= mLevel[left][j] > mLevel[i][j] ? TerrainTile::SOUTH : 0;
-					tile |= mLevel[right][j] > mLevel[i][j] ? TerrainTile::NORTH : 0;
-					tile |= mLevel[i][top] > mLevel[i][j] ? TerrainTile::EAST : 0;
-					tile |= mLevel[i][bottom] > mLevel[i][j] ? TerrainTile::WEST : 0;
-
-					if (mLevel[i][j] % 2 == 1)
-					{
-						mLod[i][j] += mTile->GetOffset(tile);
-					}
-				}
-			}
+			UpdateGrid();
 			
 			mMatricesBuffer = new Engine::GpuMappedBuffer();
 			int tilesCount = GetNumTiles();
@@ -224,12 +219,16 @@ namespace Engine
 
 			ss << mSize << " " << mTiles[0] << " " << mTiles[1] << " " << mOffset[0] << " " << mOffset[1] << " " << mTileTessellation << " " << mLodScale << std::endl;
 
+			printf("TerrainGrid - serialize: %s\n", ss.str().c_str());
+
 			return ss.str();
 		}
 
 		inline void Deserialize(const std::string& s)
 		{
 			std::stringstream ss(s);
+
+			printf("TerrainGrid - deserialize: %s\n", s.c_str());
 
 			ss >> mSize >> mTiles[0] >> mTiles[1] >> mOffset[0] >> mOffset[1] >> mTileTessellation >> mLodScale;
 		}
