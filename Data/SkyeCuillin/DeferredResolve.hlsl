@@ -393,7 +393,91 @@ float4 PS(VSOut input, uint sampleID : SV_SampleIndex) : SV_TARGET
 				}
 				else if (lightsData[lightInput.id].shadowFilter == 6)
 				{
-					float4 origin = mul(shadowAtlasData[spotLight.shadowID].shadowMatrix, positionWS);
+					float3 ndc = positionProj.xyz;
+
+					float visibility = 1.0f;
+					float oneTexelSize = 1.0f / lightsData[lightInput.id].shadowScale;
+					float halfTexelSize = oneTexelSize * 0.5f;
+					float2 ndcCurrentFragmentLightmapTexel = ndc.xy;
+					float lightSizeScale = 1.0f / lightsData[lightInput.id].data3.x;
+					float near_plane = spotLight.shadowNear;
+					float far_plane = spotLight.shadowFar;
+					float lightmapFarPlaneSize = tan(spotLight.spotAngle * 0.5f);
+
+					float z = ndc.z * (far_plane - near_plane);
+					float zlinearized = ((2.0f * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane))) / far_plane;
+
+					for (int i = -10; i < 10; i++)
+					{
+						for (int j = -10; j < 10; j++)
+						{
+							float sampleTexX = ndc.x + oneTexelSize * 2.5f * float(i);
+							float sampleTexY = ndc.y + oneTexelSize * 2.5f * float(j);
+							float2 sampleCoords = float2(sampleTexX, sampleTexY);
+
+							float zs = shadowMap.SampleLevel(shadowSampler, sampleCoords.xy, 0.0f).x * (far_plane - near_plane);
+							float zslinearized = ((2.0f * near_plane * far_plane) / (far_plane + near_plane - zs * (far_plane - near_plane))) / far_plane;
+
+							if (zslinearized > zlinearized)
+							{
+								continue;
+							}
+
+							float thisSampleZPlaneSize = lightmapFarPlaneSize * zslinearized;
+							float2 ndcNextFragmentLightmapTexel = sampleCoords;
+							float scaleFactor = zlinearized / (zlinearized - zslinearized);
+
+							float left = (ndcNextFragmentLightmapTexel.x - ndcCurrentFragmentLightmapTexel.x - halfTexelSize) * thisSampleZPlaneSize * scaleFactor * lightSizeScale;
+							float right = (ndcNextFragmentLightmapTexel.x - ndcCurrentFragmentLightmapTexel.x + halfTexelSize) * thisSampleZPlaneSize * scaleFactor * lightSizeScale;
+							float top = (ndcNextFragmentLightmapTexel.y - ndcCurrentFragmentLightmapTexel.y + halfTexelSize) * thisSampleZPlaneSize * scaleFactor * lightSizeScale;
+							float bottom = (ndcNextFragmentLightmapTexel.y - ndcCurrentFragmentLightmapTexel.y - halfTexelSize) * thisSampleZPlaneSize * scaleFactor * lightSizeScale;
+
+							left = clamp(left, -0.5f, 0.5f);
+							right = clamp(right, -0.5f, 0.5f);
+							top = clamp(top, -0.5f, 0.5f);
+							bottom = clamp(bottom, -0.5f, 0.5f);
+
+							float2 sampleCoords1 = float2(sampleTexX - (oneTexelSize * 2.5f), sampleTexY);
+							float zs1 = shadowMap.SampleLevel(shadowSampler, sampleCoords1.xy, 0.0f).x * (far_plane - near_plane);
+							float zslinearized1 = ((2.0f * near_plane * far_plane) / (far_plane + near_plane - zs1 * (far_plane - near_plane))) / far_plane;
+
+							if (zslinearized1 < zlinearized)
+							{
+								float thisSampleZPlaneTexelSize = lightmapFarPlaneSize * zslinearized1;
+								ndcNextFragmentLightmapTexel = sampleCoords1;
+								scaleFactor = zlinearized / (zlinearized - zslinearized1);
+								float left1 = (ndcNextFragmentLightmapTexel.x - ndcCurrentFragmentLightmapTexel.x - halfTexelSize) * thisSampleZPlaneTexelSize * scaleFactor * lightSizeScale;
+								left1 = clamp(left1, -0.5f, 0.5f);
+								left = min(left1, left);
+							}
+
+							float2 sampleCoords2 = float2(sampleTexX, sampleTexY - (oneTexelSize * 2.5f));
+							float zs2 = shadowMap.SampleLevel(shadowSampler, sampleCoords2.xy, 0.0f).x * (far_plane - near_plane);
+							float zslinearized2 = ((2.0 * near_plane * far_plane) / (far_plane + near_plane - zs2 * (far_plane - near_plane))) / far_plane;
+
+							if (zslinearized2 < zlinearized)
+							{
+								float thisSampleZPlaneTexelSize = lightmapFarPlaneSize * zslinearized1;
+								ndcNextFragmentLightmapTexel = sampleCoords2;
+								scaleFactor = zlinearized / (zlinearized - zslinearized2);
+								float bottom1 = (ndcNextFragmentLightmapTexel.y - ndcCurrentFragmentLightmapTexel.y - halfTexelSize) * thisSampleZPlaneTexelSize * scaleFactor * lightSizeScale;
+								bottom1 = clamp(bottom1, -0.5f, 0.5f);
+								bottom = min(bottom1, bottom);
+							}
+
+							float width = right - left;
+							float height = top - bottom;
+
+							float area = width * height;
+							visibility -= area * 1.0f;
+						}
+					}
+
+					if (visibility < 0.0f) visibility = 0.0f;
+
+					return float4(visibility, visibility, visibility, 1.0f);
+
+					/*float4 origin = mul(shadowAtlasData[spotLight.shadowID].shadowMatrix, positionWS);
 					origin.z /= (spotLight.shadowFar - spotLight.shadowNear);
 					origin.z -= lightsData[lightInput.id].offset;
 
@@ -470,7 +554,7 @@ float4 PS(VSOut input, uint sampleID : SV_SampleIndex) : SV_TARGET
 
 					areaShadows /= (float)PCSS_SampleCount;
 					areaShadows = min(areaShadows, 1.0f);
-					shadowMask *= (1.0f - areaShadows);
+					shadowMask *= (1.0f - areaShadows);*/
 				}
 				else
 				{

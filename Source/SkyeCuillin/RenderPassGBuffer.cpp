@@ -61,8 +61,58 @@ RenderPassGBuffer::RenderPassGBuffer(Engine::D3DRenderer* renderer, unsigned int
 		mGBufferRS,
 		mGBuffer,
 		Engine::BlendState::CreateStateD3D(true),
-		//Engine::RasterizerState::CreateStateD3D(),
-		Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
+		Engine::RasterizerState::CreateStateD3D(),
+		//Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
+		&dsState,
+		&inputLayout,
+		Engine::PipelineState::PrimitiveType::PATCH,
+		rtvFormats,
+		Engine::Graphics::Format::D32F,
+		mSamples,
+		0);
+
+	mGBufferTerrainRS = new Engine::RootSignature(renderer->GetDevice(), 8, 1);
+	(*mGBufferTerrainRS)[0].InitAsConstantBuffer(0);
+	(*mGBufferTerrainRS)[1].InitAsDescriptorTable(1);
+	(*mGBufferTerrainRS)[1].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0, 1);
+	(*mGBufferTerrainRS)[2].InitAsDescriptorTable(1);
+	(*mGBufferTerrainRS)[2].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+	(*mGBufferTerrainRS)[3].InitAsDescriptorTable(1);
+	(*mGBufferTerrainRS)[3].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 2, 1);
+	(*mGBufferTerrainRS)[4].InitAsDescriptorTable(1);
+	(*mGBufferTerrainRS)[4].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 3, 1);
+	(*mGBufferTerrainRS)[5].InitAsDescriptorTable(1);
+	(*mGBufferTerrainRS)[5].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 4, 1);
+	(*mGBufferTerrainRS)[6].InitAsConstantBuffer(2);
+	(*mGBufferTerrainRS)[7].InitAsConstants(1, 1);
+	mGBufferTerrainRS->InitStaticSampler(0, Engine::Sampler::CreateSamplerD3D(Engine::Sampler::Filter::ANISOTROPIC,
+		Engine::Sampler::Address::WRAP,
+		Engine::Sampler::Address::WRAP,
+		Engine::Sampler::Address::WRAP,
+		0.0f,
+		16,
+		Engine::Sampler::ComparisonFunc::NEVER,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		0.0f,
+		32.0f));
+	mGBufferTerrainRS->Finalize(D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+
+	mGBufferTerrain = new Engine::D3DShader("../Data/SkyeCuillin/GBufferTerrain.hlsl",
+		std::vector<Engine::D3DShader::ShaderEntryPoint>
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::VERTEX_SHADER, "VS"),
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::HULL_SHADER, "HS"),
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::DOMAIN_SHADER, "DS"),
+				Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::PIXEL_SHADER, "PS")
+		},
+		std::vector<Engine::D3DShader::ShaderDefine>());
+
+	mGBufferTerrainPS = new Engine::PipelineState(mRenderer->GetDevice(),
+		mGBufferTerrainRS,
+		mGBufferTerrain,
+		Engine::BlendState::CreateStateD3D(true),
+		Engine::RasterizerState::CreateStateD3D(),
+		//Engine::RasterizerState::CreateStateD3D(Engine::RasterizerState::WIREFRAME),
 		&dsState,
 		&inputLayout,
 		Engine::PipelineState::PrimitiveType::PATCH,
@@ -86,6 +136,10 @@ RenderPassGBuffer::RenderPassGBuffer(Engine::D3DRenderer* renderer, unsigned int
 
 RenderPassGBuffer::~RenderPassGBuffer()
 {
+	delete mGBufferTerrainRS;
+	delete mGBufferTerrainPS;
+	delete mGBufferTerrain;
+
 	delete mGBufferRS;
 	delete mGBufferPS;
 	delete mGBuffer;
@@ -157,7 +211,10 @@ void RenderPassGBuffer::Process(Engine::Entity* camera, Engine::DescriptorHeap* 
 				node.mObject->Get<Engine::MeshComponent>()->GetMesh()->Render(context);
 			}
 		}
-			
+
+		context->SetPipelineState(mGBufferTerrainPS);
+		context->SetRootSignature(mGBufferTerrainRS);
+
 		for (const Engine::RenderNode& node : nodes)
 		{
 			int batch = node.mID / 16;

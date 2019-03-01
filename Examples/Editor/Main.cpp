@@ -20,6 +20,7 @@
 #include "Editor.h"
 #include "GraphicsProfiler.h"
 #include "RenderPassGenerateMipmap.h"
+#include "Graphics/Terrain/HeightTile.h"
 
 class Main : public Engine::System
 {
@@ -72,6 +73,10 @@ private:
 	Engine::Timer* mTimer;
 
 	bool mShowProfiler;
+
+	Engine::Texture* mVirtualTexture;
+	Engine::GpuMappedBuffer* mPageTable;
+	void* mPageTablePtr;
 
 	Engine::Entity* FromModel(const std::string& name, Engine::Model* mdl)
 	{
@@ -328,6 +333,78 @@ public:
 		computeCtx->Begin();
 		mVoxelize->Clear(mRenderer->Heap(), computeCtx);
 		computeCtx->Finish();*/
+
+		Engine::HeightFile* heightFile = new Engine::HeightFile("Test.vt", 256, 64);
+
+		mPageTable = new Engine::GpuMappedBuffer();
+		mPageTable->Init(mRenderer, 8 * 8, sizeof(unsigned int));
+		mPageTablePtr = mPageTable->Map();
+
+		for (int i = 0; i < 8 * 8; i++)
+		{
+			((int*)mPageTablePtr)[i] = -1;
+		}
+
+		float* tmp = new float[64 * 8 * 64 * 8];
+		for (int i = 0; i < 64 * 8 * 64 * 8; i++)
+		{
+			tmp[i] = (float)(rand() % 1000) * 0.001f;
+		}
+
+		mVirtualTexture = new Engine::Texture();
+		mVirtualTexture->Init(mRenderer, 64 * 8, 64 * 8, 1, Engine::Graphics::Format::R32F, tmp, nullptr, true);
+
+		delete[] tmp;
+				
+		Engine::RootSignature* rs = new Engine::RootSignature(mRenderer->GetDevice(), 3, 0);
+		(*rs)[0].InitAsConstants(0, 4);
+		(*rs)[1].InitAsDescriptorTable(1);
+		(*rs)[1].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0, 1);
+		(*rs)[2].InitAsDescriptorTable(1);
+		(*rs)[2].SetTableRange(0, D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 0, 1);
+		rs->Finalize(D3D12_ROOT_SIGNATURE_FLAG_NONE);
+
+		Engine::D3DShader* shd = new Engine::D3DShader("../Data/SkyeCuillin/VirtualTexture.hlsl",
+			std::vector<Engine::D3DShader::ShaderEntryPoint>
+		{
+			Engine::D3DShader::ShaderEntryPoint(Engine::D3DShader::COMPUTE_SHADER, "CopyTile")
+		},
+			std::vector<Engine::D3DShader::ShaderDefine>());
+
+		Engine::PipelineState* ps = new Engine::PipelineState(mRenderer->GetDevice(),
+			rs,
+			shd);
+
+		for (int i = 0; i < 21; i++)
+		{
+			Engine::ComputeContext* context = mRenderer->GetComputeContext();
+
+			context->Begin();
+
+			context->SetPipelineState(ps);
+			context->SetRootSignature(rs);
+			context->SetDescriptorHeap(Engine::DescriptorHeap::CBV_SRV_UAV, mRenderer->Heap());
+
+			int x = i % 8;
+			int y = i / 8;
+			
+			float* tile = new float[64 * 64];
+			heightFile->LoadPage(i, tile);
+			Engine::Texture* tileTexture = new Engine::Texture();
+			tileTexture->Init(mRenderer, 64, 64, 1, Engine::Graphics::Format::R32F, tile);
+
+			context->SetConstants(0, Engine::DWParam(64 * x), Engine::DWParam(64 * y), Engine::DWParam(64), Engine::DWParam(64));
+			context->SetDescriptorTable(1, tileTexture->GetSRV());
+			context->SetDescriptorTable(2, mVirtualTexture->GetUAV());
+			context->Dispatch(64, 64, 1);
+			((int*)mPageTablePtr)[0] = 0;
+
+			context->Finish();
+
+			delete tileTexture;
+			delete[] tile;
+		}
+
 
 		mRenderer->Flush();
 
@@ -726,8 +803,9 @@ public:
 		{
 			//ImGui::Image((ImTextureID)(mReflectionPass->GetBuffer()->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
 			//ImGui::Image((ImTextureID)(mGIPass->GetBuffer()->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
-			ImGui::Image((ImTextureID)(mLightingSystem->GetShadowMap()->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
+			//ImGui::Image((ImTextureID)(mLightingSystem->GetShadowMap()->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
 			//ImGui::Image((ImTextureID)(mPicking->GetBuffer()->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
+			ImGui::Image((ImTextureID)(mVirtualTexture->GetSRV().mGpuHandle.ptr), ImGui::GetContentRegionAvail());
 		}
 		ImGui::End();
 

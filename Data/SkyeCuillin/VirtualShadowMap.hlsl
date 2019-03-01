@@ -76,6 +76,9 @@ VSOut VSCube(uint id : SV_VertexID,
 float4 PS(VSOut input) : SV_TARGET
 {
 	float depth = input.positionVS.z / (lightsData[lightID].shadowFar - lightsData[lightID].shadowNear);
+	/*float c1 = lightsData[lightID].shadowFar / lightsData[lightID].shadowNear;
+	float c0 = 1.0f - c1;
+	float depth = 1.0f / (c0 * input.positionVS.z + c1);*/
 
 	float2 moments = float2(depth, depth * depth);
 

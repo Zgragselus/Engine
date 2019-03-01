@@ -12,6 +12,10 @@ namespace SkyeCuillin
 		Engine::PipelineState* mGBufferPS;
 		Engine::D3DShader* mGBuffer;
 
+		Engine::RootSignature* mGBufferTerrainRS;
+		Engine::PipelineState* mGBufferTerrainPS;
+		Engine::D3DShader* mGBufferTerrain;
+
 		Engine::ColorBuffer** mColorBuffers;
 		Engine::DepthBuffer* mDepthBuffer;
 		

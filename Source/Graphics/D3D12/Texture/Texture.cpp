@@ -81,11 +81,21 @@ void Texture::Init(D3DRenderer* renderer, size_t width, size_t height, size_t de
 	if (createUAV)
 	{
 		D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc;
-		uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE3D;
-		uavDesc.Format = Graphics::GetFormat(format);
-		uavDesc.Texture3D.FirstWSlice = 0;
-		uavDesc.Texture3D.MipSlice = 0;
-		uavDesc.Texture3D.WSize = (UINT)depth;
+		if (depth == 1)
+		{
+			uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE2D;
+			uavDesc.Format = Graphics::GetFormat(format);
+			uavDesc.Texture2D.MipSlice = 0;
+			uavDesc.Texture2D.PlaneSlice = 0;
+		}
+		else
+		{
+			uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE3D;
+			uavDesc.Format = Graphics::GetFormat(format);
+			uavDesc.Texture3D.FirstWSlice = 0;
+			uavDesc.Texture3D.MipSlice = 0;
+			uavDesc.Texture3D.WSize = (UINT)depth;
+		}
 
 		renderer->GetDevice()->CreateUnorderedAccessView(mResource, NULL, &uavDesc, mUAV[0].mCpuHandle);
 	}
